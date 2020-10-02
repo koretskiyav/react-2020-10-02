@@ -1,0 +1,8 @@
+{
+  "name": "l.js.ru-react",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:timur-guslov/react-2020-10-02.git",
+  "author": "Timur Guslov <timur.guslov@gmail.com>",
+  "license": "MIT"
+}
