@@ -1,0 +1,19 @@
+{
+  "name": "react-2020-10-02",
+  "version": "1.0.0",
+  "description": "task-0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anton1922/react-2020-10-02.git"
+  },
+  "author": "Anton Fedorov <anton.pzkt@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Anton1922/react-2020-10-02/issues"
+  },
+  "homepage": "https://github.com/Anton1922/react-2020-10-02#readme"
+}
