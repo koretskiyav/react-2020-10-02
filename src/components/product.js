@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import useAmount from './hooks/use-amount';
 import counter from './hocs/counter';
 
 function Product(props) {

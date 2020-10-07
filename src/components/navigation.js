@@ -1,5 +1,4 @@
 import React from 'react';
-import { restaurants } from '../fixtures';
 
 export default function Navigation(props) {
   return (
