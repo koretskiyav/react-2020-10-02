@@ -23,7 +23,24 @@ function Reviews(props) {
     [props.reviews]
   );
 
-  return <Rate rate={finalRate} />;
+  console.log(props);
+  return (
+    <div>
+      {props.reviews.map((item) => (
+        <div key={item.id}>
+          <p>{item.user}</p>
+          <p>{item.text}</p>
+        </div>
+      ))}
+      <Rate rate={finalRate} />
+    </div>
+  );
+  // return (
+  //     <div>
+  //         <Rate rate={finalRate} />
+  //
+  //     </div>
+  //     );
 }
 
 export default Reviews;
