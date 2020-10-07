@@ -1,6 +1,5 @@
 import React from 'react';
 import Rate from './rate';
-//import Review from './review';
 
 export default function Product(props) {
   return (
