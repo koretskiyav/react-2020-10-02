@@ -18,30 +18,24 @@ export default class Restaurant extends Component {
   };
 
   getRate = () => {
-    var sumAndCount = this.props.restaurant.reviews
-      .map((rev) => rev.rating)
-      .reduce(
-        function (prev, cur) {
-          return {
-            sum: prev.sum + cur,
-            count: prev.count + 1,
-          };
-        },
-        { sum: 0, count: 0 }
-      );
-
-    return (sumAndCount.sum / sumAndCount.count).toFixed(2);
+    return (
+      this.props.restaurant.reviews
+        .map((rev) => rev.rating)
+        .reduce((prev, cur) => prev + cur) /
+      this.props.restaurant.reviews.length
+    ).toFixed(2);
   };
 
   render() {
+    const { restaurant } = this.props;
     let subInfo = '';
 
     switch (this.state.menuItem) {
       case MenuItems[0]:
-        subInfo = <Menu menu={this.props.restaurant.menu} />;
+        subInfo = <Menu menu={restaurant.menu} />;
         break;
       case MenuItems[1]:
-        subInfo = <Reviews reviews={this.props.restaurant.reviews} />;
+        subInfo = <Reviews reviews={restaurant.reviews} />;
         break;
       default:
         break;
@@ -49,7 +43,7 @@ export default class Restaurant extends Component {
 
     return (
       <div>
-        <h1>{this.props.restaurant.name}</h1>
+        <h1>{restaurant.name}</h1>
         <Rate rating={this.getRate()} />
         {MenuItems.map((menuItem, index) => (
           <button key={index} onClick={() => this.changeMenuItem(menuItem)}>
