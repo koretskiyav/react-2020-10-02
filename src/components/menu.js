@@ -3,7 +3,7 @@ import Product from './product';
 
 export default function Menu(props) {
   return (
-    <div>
+    <div style={{ flex: '1 1' }}>
       {props.menu.map((product) => (
         <Product key={product.id} product={product} />
       ))}
