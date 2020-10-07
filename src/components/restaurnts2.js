@@ -1,8 +1,7 @@
-import React, { useState, useMemo } from 'react';
-import Menu from './menu';
-import Navigation from './navigation';
+import React, { useMemo, useState } from 'react';
 import Reviews from './reviews';
-import Rate from './rate';
+import Navigation from './navigation';
+import Menu from './menu';
 
 export default function Restaurants(props) {
   const [activeId, setActiveId] = useState(props.restaurants[0].id);
@@ -12,21 +11,15 @@ export default function Restaurants(props) {
     [props.restaurants, activeId]
   );
 
-  const show =
-    activeRestaurant.reviews.reduce((sum, currect) => sum + currect.rating, 0) /
-    activeRestaurant.reviews.length;
-  const averageRating = { rating: show.toFixed(1) };
-
   return (
     <div>
       <Navigation
         restaurants={props.restaurants}
         onRestaurantClick={setActiveId}
       />
-      <Menu menu={activeRestaurant.menu} />
-      <Rate rate={averageRating} />
+      <Menu menu={activeRestaurant.menu} reviews={activeRestaurant.reviews} />
       <h2>Reviews:</h2>
-      <Reviews reviews={activeRestaurant.reviews} />
+      <Reviews reviews={props.reviews} />
     </div>
   );
 }
