@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
-import Menu from './menu';
 import Navigation from './navigation';
+import Restaurant from './restaurant';
 
 export default function Restaurants(props) {
   const [activeId, setActiveId] = useState(props.restaurants[0].id);
@@ -10,13 +10,23 @@ export default function Restaurants(props) {
     [props.restaurants, activeId]
   );
 
+  const rate = activeRestaurant.reviews.length
+    ? (
+        activeRestaurant.reviews
+          .map((obj) => obj.rating)
+          .reduce((a, b) => a + b, 0) / activeRestaurant.reviews.length
+      ).toFixed(1)
+    : 'No votes yet';
+
+  const { reviews, menu } = activeRestaurant;
+
   return (
     <div>
       <Navigation
         restaurants={props.restaurants}
         onRestaurantClick={setActiveId}
       />
-      <Menu menu={activeRestaurant.menu} />
+      <Restaurant menu={menu} reviews={reviews} rate={rate} />
     </div>
   );
 }
