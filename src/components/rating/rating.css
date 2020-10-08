@@ -1,0 +1,11 @@
+.rating__star {
+  position: relative;
+}
+
+.rating__star-shadow {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  background: #fffa;
+}
