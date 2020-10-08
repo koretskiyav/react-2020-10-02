@@ -1,12 +1,13 @@
 import React from 'react';
 import avarageRating from '../hocs/avarage-rating';
 import Menu from './menu';
+import Rate from './rate';
 import Reviews from './reviews';
 
 function Restaurant(props) {
   return (
     <div className="container">
-      <p>Avarage rating: {props.avarageRating}</p>
+      <Rate rating={props.avarageRating} />
       <div className="row">
         <div className="col-6">
           <Menu menu={props.restaurant.menu} />
