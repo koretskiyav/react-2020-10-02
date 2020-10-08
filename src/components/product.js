@@ -1,9 +1,8 @@
 import React from 'react';
+
 import counter from '../hocs/counter';
 
-function Product(props) {
-  const { count, increment, decrement } = props;
-
+const Product = ({ count, increment, decrement, ...props }) => {
   return (
     <div>
       <p>{props.product.name}</p>
@@ -13,6 +12,6 @@ function Product(props) {
       <button onClick={increment}>+</button>
     </div>
   );
-}
+};
 
 export default counter(Product);

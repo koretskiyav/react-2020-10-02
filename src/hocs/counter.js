@@ -1,4 +1,5 @@
 import React from 'react';
+
 import useAmount from '../hooks/use-amount';
 
 export default (WrappedComponent) => (props) => {

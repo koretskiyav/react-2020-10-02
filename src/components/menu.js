@@ -1,12 +1,17 @@
 import React from 'react';
+
+import shortid from 'shortid';
+
 import Product from './product';
 
-export default function Menu(props) {
+const Menu = ({ menu }) => {
   return (
     <div>
-      {props.menu.map((product) => (
-        <Product key={product.id} product={product} />
+      {menu.map((product) => (
+        <Product key={shortid.generate()} product={product} />
       ))}
     </div>
   );
-}
+};
+
+export default Menu;

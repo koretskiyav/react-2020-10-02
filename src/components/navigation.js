@@ -1,16 +1,20 @@
 import React from 'react';
 
-export default function Navigation(props) {
+import shortid from 'shortid';
+
+const Navigation = ({ restaurants, onRestaurantClick }) => {
   return (
     <div>
-      {props.restaurants.map((restaurant) => (
+      {restaurants.map((restaurant) => (
         <button
-          key={restaurant.id}
-          onClick={() => props.onRestaurantClick(restaurant.id)}
+          key={shortid.generate()}
+          onClick={() => onRestaurantClick(restaurant.id)}
         >
           {restaurant.name}
         </button>
       ))}
     </div>
   );
-}
+};
+
+export default Navigation;
