@@ -3,7 +3,8 @@ import Product from './product';
 
 export default function Menu(props) {
   return (
-    <div>
+    <div style={{ margin: '30px 0' }}>
+      <div style={{ fontSize: '2em' }}> Menu:</div>
       {props.menu.map((product) => (
         <Product key={product.id} product={product} />
       ))}
