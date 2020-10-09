@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 
 import App from './components/app';
-
-import { restaurants } from './fixtures';
+import { restaurants } from './mock-data';
 
 ReactDOM.render(
   <App restaurants={restaurants} />,
