@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Star from './star';
 
@@ -11,3 +12,7 @@ const Rate = ({ value }) => (
 );
 
 export default Rate;
+
+Rate.prototypes = {
+  value: PropTypes.number.isRequired,
+};

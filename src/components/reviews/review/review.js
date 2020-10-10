@@ -2,6 +2,7 @@ import React from 'react';
 
 import Rate from '../../rate';
 import styles from './review.module.css';
+import PropTypes, { shape } from 'prop-types';
 
 const Review = ({ user, text, rating }) => (
   <div className={styles.review}>
@@ -16,5 +17,14 @@ const Review = ({ user, text, rating }) => (
     </div>
   </div>
 );
+
+Review.propTypes = {
+  review: shape({
+    id: PropTypes.string.isRequired,
+    rating: PropTypes.number.isRequired,
+    text: PropTypes.string.isRequired,
+    user: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default Review;
