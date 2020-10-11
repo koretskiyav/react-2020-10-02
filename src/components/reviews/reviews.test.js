@@ -12,14 +12,22 @@ const anotherReviews = restaurants[1].reviews;
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Reviews', () => {
+  let wrapper;
+
+  beforeEach(() => {
+    wrapper = mount(<Reviews reviews={reviews} />);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('should render', () => {
-    const wrapper = mount(<Reviews reviews={reviews} />);
     expect(wrapper.exists('[data-id="reviews"]')).toBe(true);
     expect(wrapper.name()).toBe('ReviewsComponent');
   });
 
   it('allows us to set props', () => {
-    const wrapper = mount(<Reviews reviews={reviews} />);
     expect(wrapper.props().reviews).toBe(reviews);
 
     wrapper.setProps({ reviews: anotherReviews });
@@ -27,7 +35,6 @@ describe('Reviews', () => {
   });
 
   it('renders children', () => {
-    const wrapper = mount(<Reviews reviews={reviews} />);
     expect(wrapper.find(Review).length).toBe(2);
 
     const children = reviews.map((review) => (
@@ -46,7 +53,7 @@ describe('Reviews', () => {
   });
 
   it('renders nothing', () => {
-    const wrapper = mount(<Reviews reviews={[]} />);
+    wrapper = mount(<Reviews reviews={[]} />);
     expect(wrapper.find(Review).length).toBe(0);
     expect(wrapper.find(Review).exists()).toBe(false);
   });
