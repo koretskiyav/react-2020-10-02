@@ -1,16 +1,30 @@
 import React from 'react';
 import Rate from './rate';
 
-export default function Reviews(props) {
-    // console.log(props);
-    // console.log('countRateProps=', props.countRateProps);
-    // const arrF = () => props.setCountRateProps(props.countRateProps);
+export default function Reviews({ rev }) {
     return (
         <div style={{ display: 'flex' }}>
-            <p>{props.rev.user}&nbsp;|&nbsp;</p>
-            <p>{props.rev.text}&nbsp;|&nbsp;</p>
+            <p>{rev.user}&nbsp;|&nbsp;</p>
+            <p>{rev.text}&nbsp;|&nbsp;</p>
             <p>Оценка посетителя:&nbsp;</p>
-            <Rate rate={props.rev.rating} />
+            <Rate rate={rev.rating} />
         </div>
     );
 }
+
+
+
+    // static propTypes = {
+    //   menu: PropTypes.arrayOf(
+    //     PropTypes.shape({
+    //       id: PropTypes.string.isRequired,
+    //     }).isRequired
+    //   ).isRequired,
+    // };
+
+
+  // Menu.propTypes = {
+  //   menu: PropTypes.arrayOf(PropTypes.shape({
+  //     id: PropTypes.string.isRequired,
+  //   }).isRequired).isRequired,
+  // }
