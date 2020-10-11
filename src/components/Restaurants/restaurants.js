@@ -1,7 +1,7 @@
 import React, { useState, useMemo } from 'react';
-import Menu from './menu';
-import Navigation from './navigation';
-import Restaurant from './restaurant';
+import Menu from '../Menu';
+import Navigation from '../Navigation';
+import Restaurant from '../Restaurant';
 import PropTypes from 'prop-types';
 
 export default function Restaurants({ restaurants }) {

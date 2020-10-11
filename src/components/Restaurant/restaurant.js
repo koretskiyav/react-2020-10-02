@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import Reviews from './reviews';
-import Rate from './rate';
+import Reviews from '../Reviews';
+import Rate from '../Rate';
 import PropTypes from 'prop-types';
 
 export default function Restaurant({ activeRestaurant }) {

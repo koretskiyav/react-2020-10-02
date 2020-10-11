@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import Restaurants from './restaurants';
-import '../css/style.css';
+import Restaurants from '../Restaurants';
+import '../../css/style.css';
 import PropTypes from 'prop-types';
 
 export default class App extends PureComponent {

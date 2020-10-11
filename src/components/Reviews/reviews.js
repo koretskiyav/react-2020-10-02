@@ -1,5 +1,5 @@
 import React from 'react';
-import Rate from './rate';
+import Rate from '../Rate';
 import PropTypes from 'prop-types';
 
 export default function Reviews({ rev }) {
