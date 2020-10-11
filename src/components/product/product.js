@@ -6,7 +6,14 @@ import PlusIcon from './icons/plus.svg';
 
 import counter from '../../hocs/counter';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
+const Product = ({
+  product,
+  amount,
+  increment,
+  decrement,
+  fetchData,
+  initialAmount,
+}) => {
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
@@ -25,7 +32,11 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button className={styles.button} onClick={decrement}>
+              <button
+                className={styles.button}
+                onClick={decrement}
+                data-id="product-decrement"
+              >
                 <img src={MinusIcon} alt="minus" />
               </button>
               <button
