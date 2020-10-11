@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './product.module.css';
 import MinusIcon from './icons/minus.svg';
@@ -10,7 +10,7 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
-
+  amount = useState(1);
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
@@ -25,7 +25,11 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button className={styles.button} onClick={decrement}>
+              <button
+                className={styles.button}
+                onClick={decrement}
+                data-id="product-decrement"
+              >
                 <img src={MinusIcon} alt="minus" />
               </button>
               <button
