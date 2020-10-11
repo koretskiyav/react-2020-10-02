@@ -1,7 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-export default function Rate(props) {
+export default function Rate({ rate }) {
   return (
-    <p>{props.rate} звезд</p>
+    <p>{rate} звезд</p>
   );
+}
+
+Rate.propTypes = {
+  rate: PropTypes.number.isRequired
 }

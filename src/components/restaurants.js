@@ -2,19 +2,21 @@ import React, { useState, useMemo } from 'react';
 import Menu from './menu';
 import Navigation from './navigation';
 import Restaurant from './restaurant';
+import PropTypes from 'prop-types';
 
-export default function Restaurants(props) {
-  const [activeId, setActiveId] = useState(props.restaurants[0].id);
+export default function Restaurants({ restaurants }) {
+  // console.log(restaurants);
+  const [activeId, setActiveId] = useState(restaurants[0].id);
 
   const activeRestaurant = useMemo(
-    () => props.restaurants.find((restaurant) => restaurant.id === activeId),
-    [props.restaurants, activeId]
+    () => restaurants.find((restaurant) => restaurant.id === activeId),
+    [restaurants, activeId]
   );
 
   return (
     <div>
       <Navigation
-        restaurants={props.restaurants}
+        restaurants={restaurants}
         onRestaurantClick={setActiveId}
       />
       <h2>Меню ресторана&nbsp;{activeRestaurant.name}</h2>
@@ -23,4 +25,15 @@ export default function Restaurants(props) {
       <Restaurant activeRestaurant={activeRestaurant} />
     </div>
   );
+}
+
+Restaurants.propTypes = {
+  restaurants: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    menu: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired).isRequired,
+  }).isRequired,
+  )
 }

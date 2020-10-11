@@ -21,19 +21,15 @@ export default function Restaurant({ activeRestaurant }) {
     );
 }
 
+
 Restaurant.propTypes = {
-    activeRestaurant: PropTypes.object(PropTypes.shape({
+    activeRestaurant: PropTypes.shape({
         reviews: PropTypes.arrayOf(
             PropTypes.shape({
                 rating: PropTypes.number.isRequired,
                 id: PropTypes.string.isRequired,
             })
         ).isRequired,
-    })).isRequired,
+    }).isRequired
 }
 
-  // Menu.propTypes = {
-  //   menu: PropTypes.arrayOf(PropTypes.shape({
-  //     id: PropTypes.string.isRequired,
-  //   }).isRequired).isRequired,
-  // }

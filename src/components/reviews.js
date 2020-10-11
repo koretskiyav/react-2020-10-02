@@ -1,7 +1,9 @@
 import React from 'react';
 import Rate from './rate';
+import PropTypes from 'prop-types';
 
 export default function Reviews({ rev }) {
+
     return (
         <div style={{ display: 'flex' }}>
             <p>{rev.user}&nbsp;|&nbsp;</p>
@@ -12,19 +14,10 @@ export default function Reviews({ rev }) {
     );
 }
 
-
-
-    // static propTypes = {
-    //   menu: PropTypes.arrayOf(
-    //     PropTypes.shape({
-    //       id: PropTypes.string.isRequired,
-    //     }).isRequired
-    //   ).isRequired,
-    // };
-
-
-  // Menu.propTypes = {
-  //   menu: PropTypes.arrayOf(PropTypes.shape({
-  //     id: PropTypes.string.isRequired,
-  //   }).isRequired).isRequired,
-  // }
+Reviews.propTypes = {
+    rev: PropTypes.shape({
+        user: PropTypes.string.isRequired,
+        text: PropTypes.string,
+        rating: PropTypes.number.isRequired,
+    }).isRequired,
+}

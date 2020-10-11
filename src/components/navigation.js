@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default function Navigation(props) {
+  const { restaurants } = props;
   return (
     <div>
-      {props.restaurants.map((restaurant) => (
+      {restaurants.map((restaurant) => (
         <button
           key={restaurant.id}
           onClick={() => props.onRestaurantClick(restaurant.id)}
@@ -13,4 +15,12 @@ export default function Navigation(props) {
       ))}
     </div>
   );
+}
+
+
+Navigation.propTypes = {
+  restaurants: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  }).isRequired).isRequired,
 }
