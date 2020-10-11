@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './product.module.css';
 import MinusIcon from './icons/minus.svg';
 import PlusIcon from './icons/plus.svg';
+import SvgSprite from './svgSprite';
 
 import counter from '../../hocs/counter';
 
@@ -26,19 +27,24 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
             </div>
             <div className={styles.buttons}>
               <button className={styles.button} onClick={decrement}>
-                <img src={MinusIcon} alt="minus" />
+                <svg>
+                  <use xlinkHref="#minus" />
+                </svg>
               </button>
               <button
                 className={styles.button}
                 onClick={increment}
                 data-id="product-increment"
               >
-                <img src={PlusIcon} alt="plus" />
+                <svg>
+                  <use xlinkHref="#plus" />
+                </svg>
               </button>
             </div>
           </div>
         </div>
       </div>
+      <SvgSprite />
     </div>
   );
 };
