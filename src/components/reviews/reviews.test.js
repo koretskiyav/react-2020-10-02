@@ -57,23 +57,4 @@ describe('Reviews', () => {
       'Anonymous'
     );
   });
-
-  //   it('should render reviews', () => {
-  //     const wrapper = mount(<Reviews reviews={reviews} />);
-  //     expect(wrapper.find('[data-id="product"]').length).toBe(1);
-  //   });
-  //   it('should init from 0 amount', () => {
-  //     const wrapper = mount(<Reviews product={review} />);
-  //     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
-  //   });
-  //   it('should increment amount', () => {
-  //     const wrapper = mount(<Reviews product={review} />);
-  //     wrapper.find('[data-id="product-increment"]').simulate('click');
-  //     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('1');
-  //   });
-  //   it('should fetch data', () => {
-  //     const fn = jest.fn();
-  //     mount(<Reviews product={review} fetchData={fn} />);
-  //     expect(fn).toBeCalledWith(review.id);
-  //   });
 });
