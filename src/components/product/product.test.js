@@ -16,9 +16,4 @@ describe('Product', () => {
     wrapper.find('[data-id="product-decrement"]').simulate('click');
     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('0');
   });
-  // it('should increment amount', () => {
-  //     const wrapper = mount(<Product product={product} />);
-  //     wrapper.find('[data-id="product-increment"]').simulate('click');
-  //     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('1');
-  // });
 });
