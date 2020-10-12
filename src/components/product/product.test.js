@@ -23,6 +23,11 @@ describe('Product', () => {
     wrapper.find('[data-id="product-increment"]').simulate('click');
     expect(wrapper.find('[data-id="product-amount"]').text()).toBe('1');
   });
+  it('should descrement amount', () => {
+    const wrapper = mount(<Product product={product} />);
+    wrapper.find('[data-id="product-descrement"]').simulate('click');
+    expect(wrapper.find('[data-id="product-amount"]').text()).toBe('-1');
+  });
   it('should fetch data', () => {
     const fn = jest.fn();
     mount(<Product product={product} fetchData={fn} />);
