@@ -25,7 +25,11 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button className={styles.button} onClick={decrement}>
+              <button
+                className={styles.button}
+                onClick={decrement}
+                data-id="product-decrement"
+              >
                 <img src={MinusIcon} alt="minus" />
               </button>
               <button
@@ -41,6 +45,12 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
       </div>
     </div>
   );
+};
+
+Product.defaultProps = {
+  amount: 0,
+  decrement: () => {},
+  increment: () => {},
 };
 
 Product.propTypes = {
