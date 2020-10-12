@@ -25,7 +25,11 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button className={styles.button} onClick={decrement}>
+              <button
+                className={styles.button}
+                onClick={decrement}
+                data-id="product-decrement"
+              >
                 <img src={MinusIcon} alt="minus" />
               </button>
               <button
@@ -52,6 +56,7 @@ Product.propTypes = {
   amount: PropTypes.number,
   decrement: PropTypes.func,
   increment: PropTypes.func,
+  fetchData: PropTypes.func,
 };
 
-export default counter(Product);
+export default counter(2)(Product);
