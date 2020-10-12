@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { arrayOf } from 'prop-types';
 
 import Product from '../product';
 
@@ -39,10 +39,15 @@ class Menu extends React.Component {
   }
 }
 
-// Menu.propTypes = {
-//   menu: PropTypes.arrayOf(PropTypes.shape({
-//     id: PropTypes.string.isRequired,
-//   }).isRequired).isRequired,
-// }
+Menu.propTypes = {
+  menu: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      ingredients: arrayOf(PropTypes.string.isRequired).isRequired,
+      name: PropTypes.string,
+      price: PropTypes.number,
+    }).isRequired
+  ).isRequired,
+};
 
 export default Menu;

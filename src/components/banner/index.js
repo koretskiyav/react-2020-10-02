@@ -1,6 +1,7 @@
 import React from 'react';
 
 import styles from './banner.module.css';
+import PropTypes from 'prop-types';
 
 import DefaultBanner from './banner.jpg';
 
@@ -16,3 +17,8 @@ const Banner = ({ img = DefaultBanner, heading, description, children }) => (
 );
 
 export default Banner;
+
+Banner.propsType = {
+  children: PropTypes.element,
+  heading: PropTypes.string,
+};
