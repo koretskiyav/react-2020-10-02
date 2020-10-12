@@ -3,7 +3,10 @@ import PropTypes from 'prop-types';
 
 export default function Rate({ rate }) {
   return (
-    <p>{rate} звезд</p>
+    <div>
+      <p data-id="rate-value">{rate}</p>
+      <p>&nbsp;звезд</p>
+    </div>
   );
 }
 

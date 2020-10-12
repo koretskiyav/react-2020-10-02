@@ -1,0 +1,7 @@
+.reviews {
+  display: flex;
+}
+
+.reviews__element {
+  margin-right: 20px;
+}
