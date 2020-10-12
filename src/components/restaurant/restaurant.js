@@ -19,7 +19,7 @@ const Restaurant = ({ restaurant }) => {
       <Banner heading={name}>
         <Rate value={averageRating} />
       </Banner>
-      <div className={styles.restaurant}>
+      <div className={styles.restaurant} data-id="restaurant">
         <Menu menu={menu} />
         <Reviews reviews={reviews} />
       </div>
