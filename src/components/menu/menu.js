@@ -4,16 +4,9 @@ import PropTypes from 'prop-types';
 import Product from '../product';
 
 import styles from './menu.module.css';
+import { privateEncrypt } from 'crypto';
 
 class Menu extends React.Component {
-  static propTypes = {
-    menu: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.string.isRequired,
-      }).isRequired
-    ).isRequired,
-  };
-
   state = { error: null };
 
   componentDidCatch(error) {
@@ -38,6 +31,14 @@ class Menu extends React.Component {
     );
   }
 }
+
+Menu.propTypes = {
+  menu: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
+};
 
 // Menu.propTypes = {
 //   menu: PropTypes.arrayOf(PropTypes.shape({
