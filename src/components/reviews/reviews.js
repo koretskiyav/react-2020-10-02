@@ -5,9 +5,9 @@ import styles from './reviews.module.css';
 
 const Reviews = ({ reviews }) => {
   return (
-    <div className={styles.reviews}>
+    <div className={styles.reviews} data-id="reweiws">
       {reviews.map((review) => (
-        <Review key={review.id} {...review} />
+        <Review key={review.id} data-id="reweiw" {...review} />
       ))}
     </div>
   );
@@ -20,5 +20,4 @@ Reviews.propTypes = {
     }).isRequired
   ).isRequired,
 };
-cs;
 export default Reviews;
