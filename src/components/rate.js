@@ -5,3 +5,5 @@ function Rate(props) {
 }
 
 export default Rate;
+
+Rate.PropTypes = {};
