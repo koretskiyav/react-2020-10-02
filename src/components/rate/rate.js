@@ -13,6 +13,6 @@ const Rate = ({ value }) => (
 
 Rate.propTypes = {
   value: PropTypes.number,
-}
+};
 
 export default Rate;
