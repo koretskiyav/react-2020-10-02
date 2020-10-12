@@ -41,6 +41,12 @@ const restaurants = [
         text: 'No burgers',
         rating: 3,
       },
+      {
+        id: '429dea85-11dd-4054-a31e-c60c92e17255zz',
+        // user: 'Sam',
+        text: 'No cola',
+        rating: 1,
+      },
     ],
   },
   {
