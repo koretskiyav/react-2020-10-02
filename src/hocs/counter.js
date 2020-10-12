@@ -2,6 +2,6 @@ import React from 'react';
 import useAmount from '../hooks/use-amount';
 
 export default (WrappedComponent) => (props) => {
-  const amountProps = useAmount();
+  const amountProps = useAmount(props.amount);
   return <WrappedComponent {...props} {...amountProps} />;
 };
