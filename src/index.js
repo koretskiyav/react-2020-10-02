@@ -5,15 +5,15 @@ import './index.css';
 
 import App from './components/app';
 
-import { restaurants } from './fixtures';
 import store from './redux/store';
-
+import { load } from './redux/actions';
+store.dispatch(load());
 // DEV ONLY!!!
 window.store = store;
 
 ReactDOM.render(
   <Provider store={store}>
-    <App restaurants={restaurants} />
+    <App />
   </Provider>,
   document.getElementById('root')
 );
