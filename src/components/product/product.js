@@ -5,9 +5,17 @@ import styles from './product.module.css';
 import MinusIcon from './icons/minus.svg';
 import PlusIcon from './icons/plus.svg';
 
-import { increment, decrement } from '../../redux/actions';
+import { increment, decrement, reset } from '../../redux/actions';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
+const Product = ({
+  product,
+  amount,
+  increment,
+  decrement,
+  reset,
+  fetchData,
+  showReset,
+}) => {
   useEffect(() => {
     fetchData && fetchData(product.id);
   }, []); // eslint-disable-line
@@ -17,7 +25,9 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
       <div className={styles.content}>
         <div>
           <h4 className={styles.title}>{product.name}</h4>
-          <p className={styles.description}>{product.ingredients.join(', ')}</p>
+          <p className={styles.description}>
+            {product.ingredients?.join(', ')}
+          </p>
           <div className={styles.price}>{product.price} $</div>
         </div>
         <div>
@@ -39,6 +49,13 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
                 data-id="product-increment"
               >
                 <img src={PlusIcon} alt="plus" />
+              </button>
+              <button
+                className={showReset ? styles.button : styles.invisible}
+                onClick={() => reset(product.id)}
+                data-id="product-reset"
+              >
+                X
               </button>
             </div>
           </div>
@@ -68,6 +85,7 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = {
   decrement,
   increment,
+  reset,
 };
 
 // const mapDispatchToProps = (dispatch) => ({
