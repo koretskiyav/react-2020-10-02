@@ -1,0 +1,27 @@
+.order {
+  z-index: 100;
+  position: absolute;
+  top: 100px;
+  right: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 10px;
+  width: 400px;
+  height: 200px;
+  overflow-y: scroll;
+  font-size: 24px;
+  font-weight: 500;
+  background-color: #fff;
+}
+.total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.button {
+  width: 100px;
+  height: 25px;
+  font-size: 12px;
+}

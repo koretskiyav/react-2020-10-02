@@ -1,0 +1,25 @@
+.product,
+.product div {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+.product > div {
+  margin-right: 20px;
+}
+.counter,
+.price,
+.name,
+.sum {
+  display: flex;
+  align-items: center;
+}
+.sum,
+.button,
+.count {
+  margin-left: 10px;
+}
+.button {
+  width: 25px;
+  height: 25px;
+}
