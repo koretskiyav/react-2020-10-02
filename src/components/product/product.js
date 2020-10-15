@@ -61,9 +61,11 @@ Product.propTypes = {
   increment: PropTypes.func,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  amount: state.order[ownProps.product.id] || 0,
-});
+const mapStateToProps = (state, ownProps) => {
+  return {
+    amount: state.order[ownProps.product.id] || 0,
+  };
+};
 
 const mapDispatchToProps = {
   decrement,
