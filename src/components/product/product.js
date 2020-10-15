@@ -28,14 +28,18 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
             <div className={styles.buttons}>
               <button
                 className={styles.button}
-                onClick={() => decrement(product.id)}
+                onClick={() =>
+                  decrement(product.id, product.name, product.price)
+                }
                 data-id="product-decrement"
               >
                 <img src={MinusIcon} alt="minus" />
               </button>
               <button
                 className={styles.button}
-                onClick={() => increment(product.id)}
+                onClick={() =>
+                  increment(product.id, product.name, product.price)
+                }
                 data-id="product-increment"
               >
                 <img src={PlusIcon} alt="plus" />
@@ -61,8 +65,17 @@ Product.propTypes = {
   increment: PropTypes.func,
 };
 
+const getAmount = (state, ownProps) => {
+  const currentElement = state.order.find(
+    (el) => el.id === ownProps.product.id
+  );
+  return currentElement && currentElement.amount;
+};
+
 const mapStateToProps = (state, ownProps) => ({
-  amount: state.order[ownProps.product.id] || 0,
+  amount: getAmount(state, ownProps) >= 0 ? getAmount(state, ownProps) : 0,
+  name: ownProps.name,
+  price: ownProps.price,
 });
 
 const mapDispatchToProps = {
