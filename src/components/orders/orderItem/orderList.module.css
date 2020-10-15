@@ -1,0 +1,71 @@
+.item {
+  padding-right: 5px;
+}
+
+.itemsContainer {
+  border-bottom: 1px solid grey;
+  padding: 5px;
+}
+
+.items {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
+
+.closeBtn {
+  background: red;
+  text-align: center;
+  color: #fff;
+  border: none;
+  font-size: 12px;
+  font-weight: bold;
+  border-radius: 2px;
+  padding-bottom: 2px;
+  outline: none;
+}
+
+.closeBtn:hover {
+  cursor: pointer;
+}
+
+.button {
+  color: var(--white);
+  background-color: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-radius: 2px;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-weight: 700;
+  font-size: 24px;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+}
+
+.button + button {
+  margin-left: 1px;
+}
+
+.button img {
+  width: 0.4em;
+  height: 0.4em;
+}
+
+.btnContainer {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 12px;
+}
+
+.price {
+  right: 72px;
+  position: absolute;
+}

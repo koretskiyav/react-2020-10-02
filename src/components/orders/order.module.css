@@ -1,0 +1,29 @@
+.orders {
+  position: fixed;
+  top: 90px;
+  right: 25px;
+  border: 1px solid gray;
+  border-radius: 6px;
+  z-index: 999;
+  font-size: 12px;
+  padding: 10px;
+  min-height: 201px;
+  width: 250px;
+  background: #fff;
+  z-index: 999;
+  height: fit-content;
+  padding-bottom: 30px;
+}
+
+h3 {
+  font-size: 13px;
+  text-align: center;
+}
+
+.totalSum {
+  position: absolute;
+  bottom: 0;
+  left: 86px;
+  padding: 10px;
+  font-size: 13px;
+}
