@@ -1,0 +1,25 @@
+.order {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: var(--white);
+  padding: 16px;
+  z-index: 5;
+  box-shadow: 0 0 8px var(--grey);
+}
+
+.resto {
+  margin: 12px 0;
+  border-top: 1px solid var(--grey);
+  min-width: 480px;
+}
+
+.resto:last-child {
+  margin-bottom: 0;
+}
+
+.restoName {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 8px 0;
+}
