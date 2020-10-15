@@ -1,0 +1,16 @@
+.basket {
+  background: lightslategrey;
+  min-width: 50%;
+  text-align: center;
+  color: white;
+}
+
+.header {
+  padding-top: 15px;
+}
+
+.orderItem div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}

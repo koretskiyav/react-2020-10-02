@@ -1,3 +1,7 @@
 .restaurant {
   padding: 12px;
 }
+
+.rest {
+  display: flex;
+}
