@@ -1,0 +1,17 @@
+.cartContainer {
+  position: relative;
+  float: right;
+  width: 500px;
+}
+
+.cart {
+  position: absolute;
+  z-index: 1000;
+  background: white;
+}
+
+.total {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 10px;
+}

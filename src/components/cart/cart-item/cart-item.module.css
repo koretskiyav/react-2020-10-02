@@ -1,0 +1,15 @@
+.product {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.orderInfo {
+  display: flex;
+}
+
+.productName,
+.orderInfo span,
+.orderInfo div {
+  margin: 10px 10px 10px 10px;
+}
