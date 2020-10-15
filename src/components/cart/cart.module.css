@@ -1,0 +1,11 @@
+.cartContainer {
+  position: relative;
+  float: right;
+  width: 500px;
+}
+
+.cart {
+  position: absolute;
+  z-index: 1000;
+  background: white;
+}
