@@ -16,6 +16,7 @@ const CartItem = ({ product, order, increment, decrement, removeProduct }) => {
           <button onClick={() => decrement(product.id)}>-</button>
           <button onClick={() => removeProduct(product.id)}>x</button>
         </div>
+        <div>{product.price * order[product.id]} $</div>
       </div>
     </div>
   );

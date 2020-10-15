@@ -6,8 +6,8 @@ import { restaurants } from '../../fixtures';
 import CartItem from './cart-item';
 
 class Cart extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.products = [];
   }
@@ -17,27 +17,17 @@ class Cart extends Component {
   }
 
   getProducts(order) {
-    const newOrders = Object.keys(order).filter(
-      (id) =>
-        // this.products.length ||
-        !this.products.map((product) => product.id).includes(id)
-    );
-    const oldOrders = this.products
-      .map((product) => product.id)
-      .filter((id) => !Object.keys(order).includes(id));
-
-    newOrders.forEach((productId) => {
-      this.products.push(
-        []
-          .concat(...restaurants.map((restaurant) => restaurant.menu))
-          .find(({ id }) => id === productId)
-      );
-    });
-
-    this.products = this.products.filter(
-      (product) => !oldOrders.includes(product.id)
-    );
+    this.products = []
+      .concat(...restaurants.map((restaurant) => restaurant.menu))
+      .filter(({ id }) => Object.keys(order).includes(id));
   }
+
+  getTotal = (products) =>
+    products.reduce(
+      (acc, product) =>
+        (acc = acc + product.price * this.props.order[product.id]),
+      0
+    );
 
   render() {
     return (
@@ -46,6 +36,9 @@ class Cart extends Component {
           {this.products.map((product) => (
             <CartItem key={product.id} product={product} />
           ))}
+          <div className={styles.total}>
+            Total: {this.getTotal(this.products)} $
+          </div>
         </div>
       </div>
     );
