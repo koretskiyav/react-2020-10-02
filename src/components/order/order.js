@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import OrderItem from './order-item';
@@ -14,11 +14,13 @@ const Order = ({ restaurants, order }) => {
       }
     })
   );
+  const activeProducts = useMemo(() => products, [products]);
+
   return (
     <div>
       <h3>Ваша корзина</h3>
       <div>
-        {products.map((product) => (
+        {activeProducts.map((product) => (
           <OrderItem key={product.id} product={product} />
         ))}
       </div>
