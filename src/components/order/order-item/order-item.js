@@ -52,5 +52,16 @@ const mapDispatchToProps = {
   decrement,
   remove,
 };
+OrderItem.propsTypes = {
+  product: PropTypes.shape({
+    name: PropTypes.string,
+    price: PropTypes.number,
+  }).isRequired,
+  amount: PropTypes.number,
+  increment: PropTypes.func,
+  remove: PropTypes.func,
+  decrement: PropTypes.func,
+  fetchData: PropTypes.func,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(OrderItem);

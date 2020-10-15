@@ -1,24 +1,16 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import OrderItem from './order-item';
-
-// const averageRating = useMemo(() => {
-//     const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
-//     return Math.round(total / reviews.length);
-// }, [reviews]);
 
 const Order = ({ restaurants, order }) => {
   const menu = restaurants.flatMap((restaurant) => restaurant.menu);
   let total = 0;
   let products = [];
-
   let keys = Object.keys(order);
-
-  products = menu.filter(function (item) {
+  products = menu.filter((item) => {
     if (keys.includes(item.id) && order[item.id] !== 0) {
-      total += order[item.id] * item.price;
-      return true;
+      return (total += order[item.id] * item.price);
     }
   });
   return (
@@ -37,5 +29,10 @@ const Order = ({ restaurants, order }) => {
 const mapStateToProps = (state) => ({
   order: state.order,
 });
+
+Order.propTypes = {
+  Order: PropTypes.object,
+  restaurants: PropTypes.array.isRequired,
+};
 
 export default connect(mapStateToProps)(Order);
