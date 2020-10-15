@@ -4,15 +4,16 @@ import { connect } from 'react-redux';
 import OrderItem from './order-item';
 
 const Order = ({ restaurants, order }) => {
-  const menu = restaurants.flatMap((restaurant) => restaurant.menu);
   let total = 0;
-  let products = [];
   let keys = Object.keys(order);
-  products = menu.filter((item) => {
-    if (keys.includes(item.id) && order[item.id] !== 0) {
-      return (total += order[item.id] * item.price);
-    }
-  });
+
+  const products = restaurants.flatMap((restaurant) =>
+    restaurant.menu.filter((item) => {
+      if (keys.includes(item.id) && order[item.id] !== 0) {
+        return (total += order[item.id] * item.price);
+      }
+    })
+  );
   return (
     <div>
       <h3>Ваша корзина</h3>
