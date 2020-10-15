@@ -1,0 +1,20 @@
+.table {
+  background: #fff;
+  border-collapse: collapse;
+  position: fixed;
+  right: 50px;
+  top: 50px;
+  z-index: 5;
+}
+.table th,
+.table td {
+  padding: 5px;
+}
+.table,
+.table th,
+.table td {
+  border: 1px solid #000;
+}
+.quantity {
+  padding: 0 10px;
+}
