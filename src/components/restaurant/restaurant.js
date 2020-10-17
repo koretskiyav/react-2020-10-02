@@ -13,7 +13,7 @@ const mapStateToProps = (state, ownProps) => ({
   restaurant: restaurantById(state, ownProps),
 });
 
-const Restaurant = ({ restaurant }) => {
+const Restaurant = ({ restaurant, restaurantId }) => {
   const { name, menu, reviews } = restaurant;
 
   const averageRating = useMemo(() => {
@@ -23,7 +23,10 @@ const Restaurant = ({ restaurant }) => {
 
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={reviews} /> },
+    {
+      title: 'Reviews',
+      content: <Reviews reviews={reviews} restaurantId={restaurantId} />,
+    },
   ];
 
   return (
@@ -42,6 +45,7 @@ Restaurant.propTypes = {
     menu: PropTypes.array,
     reviews: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
+  restaurantId: PropTypes.string.isRequired,
 };
 
 export default connect(mapStateToProps)(Restaurant);
