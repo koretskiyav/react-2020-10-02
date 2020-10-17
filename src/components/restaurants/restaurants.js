@@ -21,7 +21,7 @@ Restaurants.propTypes = {
         name: PropTypes.string.isRequired,
       })
     ),
-  }),
+  }).isRequired,
 };
 
 export default connect((state) => ({
