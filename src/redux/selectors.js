@@ -1,8 +1,20 @@
 import { createSelector } from 'reselect';
 
-// const restaurantsSelector = (state) => state.restaurants;
-const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
+export const usersSelector = (state) => state.users;
+export const reviewsSelector = (state) => state.reviews;
+export const restaurantsSelector = (state) => state.restaurants;
+export const orderSelector = (state) => state.order;
+export const productsSelector = (state) => state.products;
+
+// [...items] => { [itemId]: item }
+// const getMapSelector = (listSelector) =>
+//   createSelector(listSelector, (list) =>
+//     list.reduce((acc, item) => ({ ...acc, [item.id]: item }), {})
+//   );
+
+// export const usersMapSelector = getMapSelector(usersSelector);
+// export const reviewsMapSelector = getMapSelector(reviewsSelector);
+// export const restaurantsMapSelector = getMapSelector(restaurantsSelector);
 
 export const orderProductsSelector = createSelector(
   productsSelector,

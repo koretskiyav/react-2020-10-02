@@ -5,6 +5,7 @@ import Rate from '../../rate';
 import styles from './review-form.module.css';
 import { connect } from 'react-redux';
 import Button from '../../button';
+import { addReview } from '../../../redux/actions';
 
 const INITIAL_VALUES = { name: '', text: '', rate: 5 };
 
@@ -13,6 +14,17 @@ const ReviewForm = ({ onSubmit }) => {
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
+
+    if (!values.name.trim()) {
+      alert('Please, enter your name!');
+      return;
+    }
+
+    if (!values.text.trim()) {
+      alert('Please, enter your review!');
+      return;
+    }
+
     onSubmit(values);
     reset();
   };
@@ -51,6 +63,6 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
-}))(ReviewForm);
+export default connect(null, {
+  onSubmit: addReview,
+})(ReviewForm);
