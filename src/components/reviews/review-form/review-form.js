@@ -1,19 +1,19 @@
 import React from 'react';
 import useForm from '../../../hooks/use-form';
-
 import Rate from '../../rate';
 import styles from './review-form.module.css';
 import { connect } from 'react-redux';
 import Button from '../../button';
+import { submit } from '../../../redux/actions';
 
 const INITIAL_VALUES = { name: '', text: '', rate: 5 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ onSubmit, users, reviews, submit, restaurantId }) => {
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onSubmit(values);
+    submit({ ...values, restaurantId });
     reset();
   };
 
@@ -51,6 +51,25 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
-}))(ReviewForm);
+const mapStateToProps = (state, ownProps) => ({
+  users: state.users,
+  reviews: state.reviews,
+  restaurants: state.restaurants,
+});
+
+const mapDispatchToProps = {
+  submit,
+};
+
+
+// const mapStateToProps = (state, ownProps) => ({
+//   amount: state.order[ownProps.id] || 0,
+//   product: state.products[ownProps.id],
+// });
+
+// const mapDispatchToProps = {
+//   decrement,
+//   increment,
+// };
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReviewForm);
