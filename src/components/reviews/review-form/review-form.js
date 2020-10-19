@@ -1,19 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import useForm from '../../../hooks/use-form';
 
 import Rate from '../../rate';
 import styles from './review-form.module.css';
 import { connect } from 'react-redux';
 import Button from '../../button';
+import { publish } from '../../../redux/actions';
+import { RestaurantContext } from '../../../context';
 
 const INITIAL_VALUES = { name: '', text: '', rate: 5 };
 
-const ReviewForm = ({ onSubmit }) => {
+const ReviewForm = ({ publish }) => {
+  const restaurantId = useContext(RestaurantContext);
   const { values, handlers, reset } = useForm(INITIAL_VALUES);
 
   const handleSubmit = (ev) => {
     ev.preventDefault();
-    onSubmit(values);
+    publish(restaurantId, null, values);
     reset();
   };
 
@@ -51,6 +54,8 @@ const ReviewForm = ({ onSubmit }) => {
   );
 };
 
-export default connect(null, () => ({
-  onSubmit: (values) => console.log(values), // TODO
-}))(ReviewForm);
+const mapDispatchToProps = {
+  publish,
+};
+
+export default connect(null, mapDispatchToProps)(ReviewForm);
