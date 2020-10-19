@@ -4,6 +4,7 @@ import {
   REMOVE,
   CREATE_REVIEW,
   CREATE_USER,
+  ADD_REVIEW,
 } from './constants';
 
 import { usersSelector } from './selectors';
@@ -12,10 +13,10 @@ export const increment = (id) => ({ type: INCREMENT, payload: { id } });
 export const decrement = (id) => ({ type: DECREMENT, payload: { id } });
 export const remove = (id) => ({ type: REMOVE, payload: { id } });
 
-export const createReview = ({ userId, text, rate }) => ({
+export const createReview = ({ userId, text, rating }) => ({
   type: CREATE_REVIEW,
   meta: { uuid: 'id' },
-  payload: { userId, text, rate },
+  payload: { userId, text, rating },
 });
 
 export const createUser = (name) => ({
@@ -24,10 +25,18 @@ export const createUser = (name) => ({
   payload: { name },
 });
 
-export const addReview = ({ name, text, rate }) => (dispatch, getState) => {
+export const addReview = ({ restaurantId, reviewId }) => ({
+  type: ADD_REVIEW,
+  payload: { restaurantId, reviewId },
+});
+
+export const submitReview = (restaurantId, { name, text, rate }) => (
+  dispatch,
+  getState
+) => {
   const users = usersSelector(getState());
   const user = Object.values(users).find((item) => item.name === name);
   const userId = user ? user.id : dispatch(createUser(name));
-
-  dispatch(createReview({ userId, text, rate }));
+  const reviewId = dispatch(createReview({ userId, text, rating: rate }));
+  dispatch(addReview({ restaurantId, reviewId }));
 };
