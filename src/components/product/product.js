@@ -44,31 +44,29 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
   );
 };
 
-Product.propTypes = {
-  product: PropTypes.shape({
-    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    name: PropTypes.string,
-    price: PropTypes.number,
-  }).isRequired,
-  fetchData: PropTypes.func,
-  // from HOC counter
-  amount: PropTypes.number,
-  decrement: PropTypes.func,
-  increment: PropTypes.func,
-};
+// Product.propTypes = {
+//   product: PropTypes.shape({
+//     ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+//     name: PropTypes.string,
+//     price: PropTypes.number,
+//   }).isRequired,
+//   fetchData: PropTypes.func,
+//   // from HOC counter
+//   amount: PropTypes.number,
+//   decrement: PropTypes.func,
+//   increment: PropTypes.func,
+// };
 
-const mapStateToProps = (state, ownProps) => ({
-  amount: state.order[ownProps.product.id] || 0,
-});
+const mapStateToProps = (state, ownProps) => {
+  return {
+    amount: state.order[ownProps.id] || 0,
+    product: state.products[ownProps.id],
+  }
+};
 
 const mapDispatchToProps = {
   decrement,
   increment,
 };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   decrement: () => dispatch(decrement()),
-//   increment: () => dispatch(increment()),
-// });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
