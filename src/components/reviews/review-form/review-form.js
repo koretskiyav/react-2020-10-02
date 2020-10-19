@@ -17,6 +17,9 @@ const ReviewForm = ({ onSubmit, restaurantId }) => {
     values.rating = values.rate;
     values.restaurant = restaurantId;
     delete values.rate;
+    if (values.name === '') {
+      values.name = 'Anonymous';
+    }
     onSubmit(values, restaurantId);
     reset();
   };
