@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
+
+import { restaurantSelector } from '../../redux/selectors';
 
 const Restaurant = ({ restaurant }) => {
   const { name, menu, reviews } = restaurant;
@@ -16,7 +19,10 @@ const Restaurant = ({ restaurant }) => {
 
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={reviews} /> },
+    {
+      title: 'Reviews',
+      content: <Reviews reviews={reviews} restaurantId={restaurant.id} />,
+    },
   ];
 
   return (
@@ -33,12 +39,12 @@ Restaurant.propTypes = {
   restaurant: PropTypes.shape({
     name: PropTypes.string,
     menu: PropTypes.array,
-    reviews: PropTypes.arrayOf(
-      PropTypes.shape({
-        rating: PropTypes.number.isRequired,
-      }).isRequired
-    ).isRequired,
+    reviews: PropTypes.array.isRequired,
   }).isRequired,
 };
 
-export default Restaurant;
+const mapStateToProps = (state, ownProps) => ({
+  restaurant: restaurantSelector(state, ownProps.id),
+});
+
+export default connect(mapStateToProps)(Restaurant);
