@@ -5,6 +5,7 @@ import {
   CREATE_REVIEW,
   CREATE_USER,
   ADD_REVIEW,
+  ADD_REVIEW_SYNC,
 } from './constants';
 
 import { usersSelector } from './selectors';
@@ -40,3 +41,9 @@ export const submitReview = (restaurantId, { name, text, rate }) => (
   const reviewId = dispatch(createReview({ userId, text, rating: rate }));
   dispatch(addReview({ restaurantId, reviewId }));
 };
+
+export const submitReviewSync = (restaurantId, { name, text, rate }) => ({
+  type: ADD_REVIEW_SYNC,
+  meta: { reviewUuider: true },
+  payload: { restaurantId, review: { text, rating: rate }, user: { name } },
+});

@@ -1,5 +1,5 @@
 import { normalizedUsers } from '../../fixtures';
-import { CREATE_USER } from '../constants';
+import { CREATE_USER, ADD_REVIEW_SYNC } from '../constants';
 
 // { [userId]: user }
 
@@ -16,6 +16,12 @@ export default (users = defaultUsers, action) => {
       return {
         ...users,
         [payload.id]: payload,
+      };
+
+    case ADD_REVIEW_SYNC:
+      return {
+        ...users,
+        [payload.user.id]: payload.user,
       };
 
     default:

@@ -1,5 +1,5 @@
 import { normalizedReviews } from '../../fixtures';
-import { CREATE_REVIEW } from '../constants';
+import { CREATE_REVIEW, ADD_REVIEW_SYNC } from '../constants';
 
 // { [reviewId]: review }
 
@@ -16,6 +16,12 @@ export default (reviews = defaultReviews, action) => {
       return {
         ...reviews,
         [payload.id]: payload,
+      };
+
+    case ADD_REVIEW_SYNC:
+      return {
+        ...reviews,
+        [payload.review.id]: payload.review,
       };
 
     default:

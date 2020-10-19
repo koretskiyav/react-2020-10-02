@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export default (_) => (next) => (action) => {
+export const uuider = (_) => (next) => (action) => {
   if (!action.meta?.uuid) {
     return next(action);
   }
@@ -10,4 +10,16 @@ export default (_) => (next) => (action) => {
 
   next(action);
   return uuid;
+};
+
+export const reviewUuider = (_) => (next) => (action) => {
+  if (!action.meta?.reviewUuider) {
+    return next(action);
+  }
+
+  action.payload.user.id = uuidv4();
+  action.payload.review.id = uuidv4();
+  action.payload.review.userId = action.payload.user.id;
+
+  return next(action);
 };

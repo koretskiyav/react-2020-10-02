@@ -5,7 +5,7 @@ import Rate from '../../rate';
 import styles from './review-form.module.css';
 import { connect } from 'react-redux';
 import Button from '../../button';
-import { submitReview } from '../../../redux/actions';
+import { submitReview, submitReviewSync } from '../../../redux/actions';
 
 const INITIAL_VALUES = { name: '', text: '', rate: 5 };
 
@@ -65,4 +65,5 @@ const ReviewForm = ({ restaurantId, onSubmit }) => {
 
 export default connect(null, {
   onSubmit: submitReview,
+  // onSubmit: submitReviewSync,
 })(ReviewForm);

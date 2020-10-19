@@ -1,5 +1,5 @@
 import { normalizedRestaurants } from '../../fixtures';
-import { ADD_REVIEW } from '../constants';
+import { ADD_REVIEW, ADD_REVIEW_SYNC } from '../constants';
 
 // { [restaurantId]: restaurant }
 
@@ -20,6 +20,18 @@ export default (restaurants = defaultRestaurants, action) => {
           reviews: [
             ...restaurants[payload.restaurantId].reviews,
             payload.reviewId,
+          ],
+        },
+      };
+
+    case ADD_REVIEW_SYNC:
+      return {
+        ...restaurants,
+        [payload.restaurantId]: {
+          ...restaurants[payload.restaurantId],
+          reviews: [
+            ...restaurants[payload.restaurantId].reviews,
+            payload.review.id,
           ],
         },
       };
