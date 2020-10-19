@@ -12,7 +12,7 @@ import {
 } from '../../redux/selectors';
 
 const Restaurant = ({
-  restaurant: { name, menu, reviews },
+  restaurant: { id, name, menu, reviews },
   reviewsRestaurant,
 }) => {
   const averageRating = useMemo(() => {
@@ -25,7 +25,10 @@ const Restaurant = ({
 
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={reviews} /> },
+    {
+      title: 'Reviews',
+      content: <Reviews reviews={reviews} restaurantId={id} />,
+    },
   ];
 
   return (
@@ -40,6 +43,7 @@ const Restaurant = ({
 
 Restaurant.propTypes = {
   restaurant: PropTypes.shape({
+    id: PropTypes.string,
     name: PropTypes.string,
     menu: PropTypes.array,
     reviews: PropTypes.array,
