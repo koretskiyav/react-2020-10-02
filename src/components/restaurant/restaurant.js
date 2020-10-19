@@ -1,35 +1,37 @@
-import React, { useMemo } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
 import Tabs from '../tabs';
+import { restaurantByIdSelector } from '../../redux/selectors';
+import { avgRaitingSelector } from '../../redux/selectors';
+import { RestaurantContext } from '../../context';
 
-const Restaurant = ({ restaurant }) => {
+const Restaurant = ({ restaurantId, restaurant, avgRating }) => {
   const { name, menu, reviews } = restaurant;
-
-  const averageRating = useMemo(() => {
-    const total = reviews.reduce((acc, { rating }) => acc + rating, 0);
-    return Math.round(total / reviews.length);
-  }, [reviews]);
 
   const tabs = [
     { title: 'Menu', content: <Menu menu={menu} /> },
-    { title: 'Reviews', content: <Reviews reviews={reviews} /> },
+    { title: 'Reviews', content: <Reviews reviewIds={reviews} /> },
   ];
 
   return (
     <div>
-      <Banner heading={name}>
-        <Rate value={averageRating} />
-      </Banner>
-      <Tabs tabs={tabs} />
+      <RestaurantContext.Provider value={restaurantId}>
+        <Banner heading={name}>
+          <Rate value={avgRating} />
+        </Banner>
+        <Tabs tabs={tabs} />
+      </RestaurantContext.Provider>
     </div>
   );
 };
 
 Restaurant.propTypes = {
+  restaurantId: PropTypes.string.isRequired,
   restaurant: PropTypes.shape({
     name: PropTypes.string,
     menu: PropTypes.array,
@@ -41,4 +43,14 @@ Restaurant.propTypes = {
   }).isRequired,
 };
 
-export default Restaurant;
+const mapStateToProps = (state, ownProps) => {
+  return {
+    restaurant: restaurantByIdSelector(state, ownProps.restaurantId),
+    avgRating: avgRaitingSelector(
+      state,
+      restaurantByIdSelector(state, ownProps.restaurantId).reviews
+    ),
+  };
+};
+
+export default connect(mapStateToProps)(Restaurant);
