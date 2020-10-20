@@ -5,11 +5,16 @@ import Restaurant from '../restaurant';
 import Tabs from '../tabs';
 
 const Restaurants = ({ restaurants }) => {
-  const tabs = restaurants.map((restaurant) => ({
-    title: restaurant.name,
-    content: <Restaurant restaurant={restaurant} />,
+  console.log('RRRRRRRRR restaurants: ', restaurants);
+  const keys = Object.keys(restaurants);
+  //console.log('restaurants keys: ', keys);
+  //keys.map( key => console.log(restaurants[key].name))
+  //const tabs = restaurants.map((restaurant) => ({
+  const tabs = keys.map((key) => ({
+    title: restaurants[key].name,
+    content: <Restaurant id={key} />,
   }));
-
+  //console.log('TTTTTTTTTTT Tabs: ', tabs);
   return <Tabs tabs={tabs} />;
 };
 
