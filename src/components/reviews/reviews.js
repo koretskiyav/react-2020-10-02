@@ -12,11 +12,7 @@ const Reviews = ({ reviews, restaurantId }) => {
       {reviews.map((review) => (
         <Review key={review} id={review} />
       ))}
-<<<<<<< HEAD
-      <ReviewForm />
-=======
       <ReviewForm restaurantId={restaurantId} />
->>>>>>> dev-ht4
     </div>
   );
 };
