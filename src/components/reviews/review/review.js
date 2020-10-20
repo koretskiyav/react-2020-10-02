@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Rate from '../../rate';
 import styles from './review.module.css';
+import { reviewsSelector } from '../../../redux/selectors';
 
 const Review = ({ review, user }) => {
   const { text, rating } = review;
@@ -38,10 +39,21 @@ const mapStateToProps = (state, ownProps) => {
   const userId = state.reviews[ownProps.id].userId;
 
   return {
-    review: state.reviews[ownProps.id],
+    // review: state.reviews[ownProps.id],
+    review: reviewsSelector(state)[ownProps.id],
     user: state.users[userId],
   }
 };
+
+/*
+export default connect((state) => {
+  return {
+    total: totalSelector(state),
+    orderProducts: orderProductsSelector(state),
+  };
+})(Basket);
+*/
+
 
 const mapDispatchToProps = {
   // decrement,
