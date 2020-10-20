@@ -14,7 +14,7 @@ const Restaurants = ({ restaurants }) => {
     title: restaurants[key].name,
     content: <Restaurant id={key} />,
   }));
-  console.log('TTTTTTTTTTT Tabs: ', tabs);
+  //console.log('TTTTTTTTTTT Tabs: ', tabs);
   return <Tabs tabs={tabs} />;
 };
 

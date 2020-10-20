@@ -8,8 +8,8 @@ import styles from './review.module.css';
 
 // const Review = ({ user, text, rating }) => (
 const Review = ({ review, users }) => {
-  console.log('UUUUUUUU Users :', users);
-  console.log('ZZZZZZZZZZZ :', review);
+  // console.log('UUUUUUUU Users :', users);
+  // console.log('ZZZZZZZZZZZ :', review);
   // console.log(store.getState())
   return (
     <div className={styles.review} data-id="review">

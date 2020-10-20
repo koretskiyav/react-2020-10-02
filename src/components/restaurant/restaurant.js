@@ -8,7 +8,7 @@ import Tabs from '../tabs';
 import { connect } from 'react-redux';
 
 const Restaurant = ({ restaurant }) => {
-  console.log('GGGGGGG restaurant: ', restaurant);
+  //console.log('GGGGGGG restaurant: ', restaurant);
   //const { name, menu, reviews } = restaurant;
 
   const averageRating = useMemo(() => {
