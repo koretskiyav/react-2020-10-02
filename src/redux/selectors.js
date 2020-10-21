@@ -3,10 +3,25 @@ import { getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
+const productsSelector = (state) => state.products.entities;
+const reviewsSelector = (state) => state.reviews.entities;
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+
+export const usersLoadingSelector = (state) => state.users.loading;
+export const usersLoadedSelector = (state) => state.users.loaded;
+
+export const productsLoadingSelector = (state, props) =>
+  state.products.loading[props.restaurantId];
+export const productsLoadedSelector = (state, props) =>
+  state.products.loaded[props.restaurantId];
+
+export const reviewsLoadingSelector = (state, props) =>
+  state.reviews.loading[props.restaurantId];
+export const reviewsLoadedSelector = (state, props) =>
+  state.reviews.loaded[props.restaurantId];
 
 export const orderProductsSelector = createSelector(
   productsSelector,
@@ -29,9 +44,6 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
-
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
@@ -45,7 +57,7 @@ export const reviewWitUserSelector = createSelector(
   usersSelector,
   (review, users) => ({
     ...review,
-    user: users[review.userId]?.name,
+    user: users[review?.userId]?.name,
   })
 );
 
@@ -53,7 +65,7 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { reviews }) => reviews,
   (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
+    const ratings = ids.map((id) => reviews[id]?.rating);
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
