@@ -9,10 +9,13 @@ export default (state = {}, action) => {
     case DECREMENT:
       return {
         ...state,
-        [payload.id]: state[payload.id] ? state[payload.id] - 1 : 0,
+        [payload.id]: Math.max((state[payload.id] || 0) - 1, 0),
       };
     case REMOVE:
-      return { ...state, [payload.id]: 0 };
+      return {
+        ...state,
+        [payload.id]: 0,
+      };
     default:
       return state;
   }

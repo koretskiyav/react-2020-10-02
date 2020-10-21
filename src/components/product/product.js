@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
-import MinusIcon from './icons/minus.svg';
-import PlusIcon from './icons/plus.svg';
 
 import { increment, decrement } from '../../redux/actions';
+
+import Button from '../button';
+import { productAmountSelector, productSelector } from '../../redux/selectors';
 
 const Product = ({ product, amount, increment, decrement, fetchData }) => {
   useEffect(() => {
@@ -26,20 +28,16 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button
-                className={styles.button}
+              <Button
                 onClick={() => decrement(product.id)}
                 data-id="product-decrement"
-              >
-                <img src={MinusIcon} alt="minus" />
-              </button>
-              <button
-                className={styles.button}
+                icon="minus"
+              />
+              <Button
                 onClick={() => increment(product.id)}
                 data-id="product-increment"
-              >
-                <img src={PlusIcon} alt="plus" />
-              </button>
+                icon="plus"
+              />
             </div>
           </div>
         </div>
@@ -61,18 +59,19 @@ Product.propTypes = {
   increment: PropTypes.func,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  amount: state.order[ownProps.product.id] || 0,
+const mapStateToProps = createStructuredSelector({
+  amount: productAmountSelector,
+  product: productSelector,
 });
+
+// const mapStateToProps = (state, props) => ({
+//   amount: productAmountSelector(state, props),
+//   product: productSelector(state, props),
+// });
 
 const mapDispatchToProps = {
   decrement,
   increment,
 };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   decrement: () => dispatch(decrement()),
-//   increment: () => dispatch(increment()),
-// });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
