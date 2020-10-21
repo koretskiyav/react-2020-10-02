@@ -8,9 +8,9 @@ import Tabs from '../tabs';
 import { connect } from 'react-redux';
 import { averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ id, name, reviews, averageRating }) => {
+const Restaurant = ({ id, menu, name, reviews, averageRating }) => {
   const tabs = [
-    { title: 'Menu', content: <Menu restaurantId={id} /> },
+    { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
@@ -32,6 +32,7 @@ const Restaurant = ({ id, name, reviews, averageRating }) => {
 Restaurant.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
+  menu: PropTypes.array,
   reviews: PropTypes.array,
   averageRating: PropTypes.number,
 };

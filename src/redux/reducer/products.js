@@ -28,7 +28,7 @@ export default (state = initialState, action) => {
       const { restaurantId } = payload;
       return {
         ...state,
-        entities: arrToMap(response),
+        entities: { ...state.entities, ...arrToMap(response) },
         loading: {
           ...state.loading,
           [restaurantId]: false,

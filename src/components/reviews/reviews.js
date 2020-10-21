@@ -26,9 +26,21 @@ const Reviews = ({
   loadingUsers,
 }) => {
   useEffect(() => {
-    loadUsers();
-    loadReviews(restaurantId);
-  }, [restaurantId]); // eslint-disable-line
+    if (!loadedUsers && !loadingUsers) {
+      loadUsers();
+    }
+    if (!loadedReviews && !loadingReviews) {
+      loadReviews(restaurantId);
+    }
+  }, [
+    restaurantId,
+    loadedReviews,
+    loadedUsers,
+    loadingUsers,
+    loadingReviews,
+    loadUsers,
+    loadReviews,
+  ]);
 
   if (loadingReviews || !loadedReviews || loadingUsers || !loadedUsers) {
     return <Loader />;
@@ -49,6 +61,10 @@ Reviews.propTypes = {
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   loadReviews: PropTypes.func.isRequired,
   loadUsers: PropTypes.func.isRequired,
+  loadingReviews: PropTypes.bool.isRequired,
+  loadedReviews: PropTypes.bool.isRequired,
+  loadingUsers: PropTypes.bool.isRequired,
+  loadedUsers: PropTypes.bool.isRequired,
 };
 
 export default connect(

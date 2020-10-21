@@ -48,10 +48,6 @@ export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
 );
-export const productsIdsListSelector = createSelector(
-  productsSelector,
-  Object.keys
-);
 export const productAmountSelector = getById(orderSelector, 0);
 export const productSelector = getById(productsSelector);
 const reviewSelector = getById(reviewsSelector);

@@ -7,7 +7,6 @@ import { loadProducts } from '../../redux/actions';
 
 import styles from './menu.module.css';
 import {
-  productsIdsListSelector,
   productsLoadedSelector,
   productsLoadingSelector,
 } from '../../redux/selectors';
@@ -21,15 +20,17 @@ class Menu extends React.Component {
   state = { error: null };
 
   componentDidMount() {
-    const { restaurantId, loadProducts } = this.props;
+    const { restaurantId, loadProducts, loading, loaded } = this.props;
 
-    loadProducts(restaurantId);
+    if (!loading && !loaded) {
+      loadProducts(restaurantId);
+    }
   }
 
   componentDidUpdate(prevProps) {
-    const { restaurantId, loadProducts } = this.props;
+    const { restaurantId, loadProducts, loading, loaded } = this.props;
 
-    if (prevProps.restaurantId !== restaurantId) {
+    if (prevProps.restaurantId !== restaurantId && !loading && !loaded) {
       loadProducts(restaurantId);
     }
   }
@@ -64,7 +65,6 @@ class Menu extends React.Component {
 
 export default connect(
   (state, ownProps) => ({
-    menu: productsIdsListSelector(state),
     loading: productsLoadingSelector(state, ownProps),
     loaded: productsLoadedSelector(state, ownProps),
   }),
