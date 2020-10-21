@@ -3,10 +3,18 @@ import { getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const orderSelector = (state) => state.order;
-const productsSelector = (state) => state.products;
+const productsSelector = (state) => state.products.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+
+export const productsLoadingSelector = (state) => state.products.loading;
+export const productsLoadedSelector = (state) => state.products.loaded;
+export const productsLoadedRestaurantIdSelector = (state) =>
+  state.products.restaurantId;
+
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const reviewsLoadedSelector = (state) => state.reviews.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,
@@ -29,8 +37,8 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
+const reviewsSelector = (state) => state.reviews.entities;
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -53,7 +61,16 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { reviews }) => reviews,
   (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id].rating);
+    if (Object.keys(reviews).length === 0 || !ids.length) {
+      return null;
+    }
+
+    const ratings = ids
+      .map((id) => (undefined !== reviews[id] ? reviews[id].rating : null))
+      .filter((value) => value);
+    if (!ratings.length) {
+      return null;
+    }
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
