@@ -17,7 +17,6 @@ import { useEffect } from 'react';
 import styles from './menu.module.css';
 
 const Menu = ({ products, restaurantId, loadProducts, loading, loaded }) => {
-  console.log(products);
   useEffect(() => {
     loadProducts(restaurantId);
   }, [restaurantId]); // eslint-disable-line
@@ -27,9 +26,9 @@ const Menu = ({ products, restaurantId, loadProducts, loading, loaded }) => {
   return (
     <div className={styles.menu}>
       <div>
-        {products.map((id) => (
-          <Product key={id} id={id} />
-        ))}
+        {products.map((product) => {
+          return <Product key={product.id} product={product} />;
+        })}
       </div>
       <div>
         <Basket />

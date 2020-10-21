@@ -10,7 +10,6 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const { type, response, error } = action;
-  console.log(action);
   switch (type) {
     case LOAD_PRODUCTS + REQUEST:
       return {
