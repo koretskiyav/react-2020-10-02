@@ -64,14 +64,15 @@ const mapStateToProps = createStructuredSelector({
   product: productSelector,
 });
 
-// const mapStateToProps = (state, props) => ({
-//   amount: productAmountSelector(state, props),
-//   product: productSelector(state, props),
-// });
-
 const mapDispatchToProps = {
   decrement,
   increment,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
+
+// export default connect((state, props) => ({
+//   state: mapStateToProps,
+//   props: mapDispatchToProps,
+//   product: productSelector(state, props),
+// }))(Product);
