@@ -27,7 +27,17 @@ export const totalSelector = createSelector(
 );
 
 export const reviewSelector = createSelector(
-  reviewsSelector, props,
-  (reviews, props) =>
-    reviews[props.id]
+  reviewsSelector,
+  (_, props) => props.id,
+  (reviews, id) =>
+    reviews[id]
 );
+
+/*
+export const getById = (selector, defaultValue) =>
+  createSelector(
+    selector,
+    (_, props) => props.id,
+    (entity, id) => entity[id] || defaultValue
+  );
+*/
