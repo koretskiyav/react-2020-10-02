@@ -5,14 +5,34 @@ import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 
 import { loadReviews, loadUsers } from '../../redux/actions';
+import {
+  reviewsLoadingSelector,
+  reviewsLoadedSelector,
+  usersLoadingSelector,
+  usersLoadedSelector,
+} from '../../redux/selectors';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
+import Loader from '../loader';
 
-const Reviews = ({ reviews, restaurantId, loadReviews, loadUsers }) => {
+const Reviews = ({
+  reviews,
+  restaurantId,
+  loadReviews,
+  loadUsers,
+  loadingReviews,
+  loadedReviews,
+  loadedUsers,
+  loadingUsers,
+}) => {
   useEffect(() => {
-    loadReviews(restaurantId);
     loadUsers();
+    loadReviews(restaurantId);
   }, [restaurantId]); // eslint-disable-line
+
+  if (loadingReviews || !loadedReviews || loadingUsers || !loadedUsers) {
+    return <Loader />;
+  }
 
   return (
     <div className={styles.reviews}>
@@ -31,4 +51,12 @@ Reviews.propTypes = {
   loadUsers: PropTypes.func.isRequired,
 };
 
-export default connect(null, { loadReviews, loadUsers })(Reviews);
+export default connect(
+  (state, ownProps) => ({
+    loadingReviews: reviewsLoadingSelector(state, ownProps),
+    loadedReviews: reviewsLoadedSelector(state, ownProps),
+    loadingUsers: usersLoadingSelector(state),
+    loadedUsers: usersLoadedSelector(state),
+  }),
+  { loadReviews, loadUsers }
+)(Reviews);

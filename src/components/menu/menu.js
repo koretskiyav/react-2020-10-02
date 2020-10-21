@@ -63,10 +63,10 @@ class Menu extends React.Component {
 }
 
 export default connect(
-  (state) => ({
+  (state, ownProps) => ({
     menu: productsIdsListSelector(state),
-    loading: productsLoadingSelector(state),
-    loaded: productsLoadedSelector(state),
+    loading: productsLoadingSelector(state, ownProps),
+    loaded: productsLoadedSelector(state, ownProps),
   }),
   { loadProducts }
 )(Menu);

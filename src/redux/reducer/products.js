@@ -9,29 +9,51 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  const { type, response, error } = action;
+  const { type, response, error, payload } = action;
 
   switch (type) {
-    case LOAD_PRODUCTS + REQUEST:
+    case LOAD_PRODUCTS + REQUEST: {
+      const { restaurantId } = payload;
       return {
         ...state,
-        loading: true,
+        state: true,
+        loading: {
+          ...state.loading,
+          [restaurantId]: true,
+        },
         error: null,
       };
-    case LOAD_PRODUCTS + SUCCESS:
+    }
+    case LOAD_PRODUCTS + SUCCESS: {
+      const { restaurantId } = payload;
       return {
         ...state,
         entities: arrToMap(response),
-        loading: false,
-        loaded: true,
+        loading: {
+          ...state.loading,
+          [restaurantId]: false,
+        },
+        loaded: {
+          ...state.loaded,
+          [restaurantId]: true,
+        },
       };
-    case LOAD_PRODUCTS + FAILURE:
+    }
+    case LOAD_PRODUCTS + FAILURE: {
+      const { restaurantId } = payload;
       return {
         ...state,
-        loading: false,
-        loaded: false,
+        loading: {
+          ...state.loading,
+          [restaurantId]: false,
+        },
+        loaded: {
+          ...state.loaded,
+          [restaurantId]: false,
+        },
         error,
       };
+    }
     default:
       return state;
   }

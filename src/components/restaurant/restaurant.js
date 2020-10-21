@@ -17,10 +17,12 @@ const Restaurant = ({ id, name, reviews, averageRating }) => {
     },
   ];
 
+  const ratingValue = averageRating || 0;
+
   return (
     <div>
       <Banner heading={name}>
-        <Rate value={averageRating} />
+        <Rate value={ratingValue} />
       </Banner>
       <Tabs tabs={tabs} />
     </div>
