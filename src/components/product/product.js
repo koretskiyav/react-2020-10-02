@@ -9,11 +9,9 @@ import { increment, decrement } from '../../redux/actions';
 import Button from '../button';
 import { productAmountSelector, productSelector } from '../../redux/selectors';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
-  useEffect(() => {
-    fetchData && fetchData(product.id);
-  }, []); // eslint-disable-line
-
+const Product = (props) => {
+  const { product, amount, increment, decrement } = props;
+  console.log(props);
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
@@ -61,13 +59,7 @@ Product.propTypes = {
 
 const mapStateToProps = createStructuredSelector({
   amount: productAmountSelector,
-  product: productSelector,
 });
-
-// const mapStateToProps = (state, props) => ({
-//   amount: productAmountSelector(state, props),
-//   product: productSelector(state, props),
-// });
 
 const mapDispatchToProps = {
   decrement,
@@ -75,3 +67,9 @@ const mapDispatchToProps = {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
+
+// export default connect((state, props) => ({
+//   state: mapStateToProps,
+//   props: mapDispatchToProps,
+//   product: productSelector(state, props),
+// }))(Product);
