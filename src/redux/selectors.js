@@ -26,3 +26,8 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
+export const reviewSelector = createSelector(
+  reviewsSelector, props,
+  (reviews, props) =>
+    reviews[props.id]
+);

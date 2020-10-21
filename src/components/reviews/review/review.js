@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Rate from '../../rate';
 import styles from './review.module.css';
-import { reviewsSelector } from '../../../redux/selectors';
+import { reviewSelector } from '../../../redux/selectors';
 
 const Review = ({ review, user }) => {
   const { text, rating } = review;
@@ -40,7 +40,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     // review: state.reviews[ownProps.id],
-    review: reviewsSelector(state)[ownProps.id],
+    review: reviewSelector(state, ownProps),
     user: state.users[userId],
   }
 };
