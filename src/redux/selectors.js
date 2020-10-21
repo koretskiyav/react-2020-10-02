@@ -33,7 +33,7 @@ export const totalSelector = createSelector(
 );
 
 const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,

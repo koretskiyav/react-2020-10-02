@@ -4,13 +4,14 @@ import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
 
-import { loadReviews } from '../../redux/actions';
+import { loadReviews, loadUsers } from '../../redux/actions';
 import { connect } from 'react-redux';
 import { useEffect } from 'react';
 
-const Reviews = ({ reviews, restaurantId, loadReviews }) => {
+const Reviews = ({ reviews, restaurantId, loadReviews, loadUsers }) => {
   useEffect(() => {
     loadReviews(restaurantId);
+    loadUsers();
   }, [restaurantId]); // eslint-disable-line
 
   return (
@@ -26,6 +27,8 @@ const Reviews = ({ reviews, restaurantId, loadReviews }) => {
 Reviews.propTypes = {
   restaurantId: PropTypes.string.isRequired,
   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+  loadReviews: PropTypes.func.isRequired,
+  loadUsers: PropTypes.func.isRequired,
 };
 
-export default connect(null, { loadReviews })(Reviews);
+export default connect(null, { loadReviews, loadUsers })(Reviews);
