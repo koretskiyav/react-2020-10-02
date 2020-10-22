@@ -4,11 +4,11 @@ import {
   REMOVE,
   ADD_REVIEW,
   LOAD_RESTAURANTS,
+  LOAD_PRODUCTS,
   LOAD_REVIEWS,
-  REQUEST,
-  SUCCESS,
-  FAILURE,
+  LOAD_USERS,
 } from './constants';
+import { getApiActionCreator } from './utils';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
 export const decrement = (id) => ({ type: DECREMENT, payload: { id } });
@@ -25,15 +25,15 @@ export const loadRestaurants = () => ({
   CallAPI: '/api/restaurants',
 });
 
-export const loadReviews = (restaurantId) => async (dispatch) => {
-  dispatch({ type: LOAD_REVIEWS + REQUEST });
+export const loadProducts = (restaurantId) => ({
+  type: LOAD_PRODUCTS,
+  CallAPI: `/api/products?id=${restaurantId}`,
+  payload: { restaurantId },
+});
 
-  try {
-    const response = await fetch(
-      `/api/reviews?id=${restaurantId}`
-    ).then((res) => res.json());
-    dispatch({ type: LOAD_REVIEWS + SUCCESS, response });
-  } catch (error) {
-    dispatch({ type: LOAD_REVIEWS + FAILURE, error });
-  }
-};
+export const loadReviews = (restaurantId) =>
+  getApiActionCreator(LOAD_REVIEWS, `/api/reviews?id=${restaurantId}`, {
+    payload: { restaurantId },
+  });
+
+export const loadUsers = () => getApiActionCreator(LOAD_USERS, '/api/users');
