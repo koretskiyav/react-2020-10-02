@@ -33,6 +33,9 @@ Restaurants.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired
   ).isRequired,
+  loading: PropTypes.bool.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  loadRestaurants: PropTypes.func.isRequired,
 };
 
 export default connect(
