@@ -1,11 +1,53 @@
-import { ADD_REVIEW } from '../constants';
-import { normalizedReviews } from '../../fixtures';
+import {
+  ADD_REVIEW,
+  FAILURE,
+  LOAD_REVIEWS,
+  REQUEST,
+  SUCCESS,
+} from '../constants';
 import { arrToMap } from '../utils';
 
-export default (state = arrToMap(normalizedReviews), action) => {
-  const { type, payload, reviewId, userId } = action;
+const initialState = {
+  entities: {},
+  loading: false,
+  loaded: false,
+  error: null,
+  loadedId: {},
+};
+
+export default (state = initialState, action) => {
+  const {
+    type,
+    payload,
+    reviewId,
+    userId,
+    response,
+    error,
+    restaurantId,
+  } = action;
 
   switch (type) {
+    case LOAD_REVIEWS + REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: null,
+      };
+    case LOAD_REVIEWS + SUCCESS:
+      return {
+        ...state,
+        entities: { ...state.entities, ...arrToMap(response) },
+        loading: false,
+        loaded: true,
+        loadedId: { ...state.loadedId, [restaurantId]: true },
+      };
+    case LOAD_REVIEWS + FAILURE:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        error,
+      };
     case ADD_REVIEW:
       const { text, rating } = payload.review;
       return {

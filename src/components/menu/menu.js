@@ -25,16 +25,20 @@ class Menu extends React.Component {
     this.setState({ error });
   }
 
+  componentDidMount() {
+    const { loadMenu, loading, restaurantId, loadedId } = this.props;
+    if (!loading && !loadedId[restaurantId]) loadMenu(restaurantId);
+  }
+
   componentDidUpdate() {
     const { loadMenu, loading, restaurantId, loadedId } = this.props;
-    //console.log(loadedId[restaurantId])
     if (!loading && !loadedId[restaurantId]) loadMenu(restaurantId);
   }
 
   render() {
-    const { loadMenu, loaded, loading, menu, restaurantId } = this.props;
-    //console.log(loadedId[restaurantId])
-    if (!loading && !loaded) loadMenu(restaurantId);
+    const { loaded, loading, menu } = this.props;
+
+    //if (!loading && !loaded) loadMenu(restaurantId);
 
     if (loading || !loaded) return <Loader />;
 

@@ -12,9 +12,12 @@ export const productsLoadingSelector = (state) => state.products.loading;
 export const productsLoadedSelector = (state) => state.products.loaded;
 export const productLoadedId = (state) => state.products.loadedId;
 
-export const reviewsLoadingSelector = (state) => state.products.loading;
-export const reviewsLoadedSelector = (state) => state.products.loaded;
-export const reviewLoadedId = (state) => state.products.loadedId;
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const reviewsLoadedSelector = (state) => state.reviews.loaded;
+export const reviewLoadedId = (state) => state.reviews.loadedId;
+
+export const usersLoadingSelector = (state) => state.users.loading;
+export const usersLoadedSelector = (state) => state.users.loaded;
 
 export const orderProductsSelector = createSelector(
   productsSelector,
@@ -37,8 +40,8 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
+const reviewsSelector = (state) => state.reviews.entities;
+const usersSelector = (state) => state.users.entities;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -60,10 +63,14 @@ const reviewSelector = getById(reviewsSelector);
 export const reviewWitUserSelector = createSelector(
   reviewSelector,
   usersSelector,
-  (review, users) => ({
-    ...review,
-    user: users[review.userId]?.name,
-  })
+  (review, users) => {
+    if (review && users)
+      return {
+        ...review,
+        user: users[review.userId]?.name,
+      };
+    return null;
+  }
 );
 
 export const averageRatingSelector = createSelector(
