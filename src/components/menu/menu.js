@@ -1,7 +1,16 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Product from '../product';
 import Basket from '../basket';
+import Loader from '../loader';
+import {
+  isProductsLoadedSelector,
+  productsListSelector,
+  productsLoadingSelector,
+  productsLoadedSelector,
+} from '../../redux/selectors';
+import { loadProducts } from '../../redux/actions';
 
 import styles from './menu.module.css';
 
@@ -10,14 +19,36 @@ class Menu extends React.Component {
     menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   };
 
-  state = { error: null };
+  state = {
+    error: null,
+  };
+
+  componentDidMount() {
+    const {
+      restaurantId,
+      loading,
+      loadProducts,
+      isProductsLoadedSelector,
+    } = this.props;
+
+    if (!loading && !isProductsLoadedSelector) loadProducts(restaurantId);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { restaurantId, loading, loadProducts } = this.props;
+    const shouldUpdate = prevProps.restaurantId !== restaurantId;
+
+    if (shouldUpdate && !loading) loadProducts(restaurantId);
+  }
 
   componentDidCatch(error) {
     this.setState({ error });
   }
 
   render() {
-    const { menu } = this.props;
+    const { products, loading, loaded } = this.props;
+
+    if (loading || !loaded) return <Loader />;
 
     if (this.state.error) {
       return <p>{this.state.error.message}</p>;
@@ -26,8 +57,8 @@ class Menu extends React.Component {
     return (
       <div className={styles.menu}>
         <div>
-          {menu.map((id) => (
-            <Product key={id} id={id} />
+          {products.map((product) => (
+            <Product key={product.id} id={product.id} />
           ))}
         </div>
         <div>
@@ -38,4 +69,15 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+export default connect(
+  (state, ownProps) => ({
+    isProductsLoadedSelector: isProductsLoadedSelector(
+      state,
+      ownProps.restaurantId
+    ),
+    products: productsListSelector(state),
+    loading: productsLoadingSelector(state),
+    loaded: productsLoadedSelector(state),
+  }),
+  { loadProducts }
+)(Menu);
