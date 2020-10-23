@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Restaurants from '../restaurants';
 import Header from '../header';
 import Basket from '../basket';
+import RestaurantsPage from '../../pages/restaurants-page';
 
 export default class App extends PureComponent {
   render() {
@@ -12,7 +12,7 @@ export default class App extends PureComponent {
         <Switch>
           <Route path="/" exact component={() => 'main page'} />
           <Route path="/checkout" component={Basket} />
-          <Route path="/restaurants/:restId" component={Restaurants} />
+          <Route path="/restaurants" component={RestaurantsPage} />
           <Route path="/" component={() => '404 - not found'} />
         </Switch>
       </div>
