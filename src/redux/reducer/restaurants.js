@@ -5,6 +5,7 @@ import {
   LOAD_RESTAURANTS,
   REQUEST,
   SUCCESS,
+  SET_TAB,
 } from '../constants';
 import { arrToMap } from '../utils';
 
@@ -13,6 +14,7 @@ const initialState = {
   loading: false,
   loaded: false,
   error: null,
+  tab: null,
 };
 
 export default (state = initialState, action) => {
@@ -42,6 +44,10 @@ export default (state = initialState, action) => {
     case ADD_REVIEW:
       return produce(state, (draft) => {
         draft.entities[payload.restaurantId].reviews.push(reviewId);
+      });
+    case SET_TAB:
+      return produce(state, (draft) => {
+        draft.tab = payload.tab;
       });
     default:
       return state;

@@ -10,6 +10,8 @@ const orderSelector = (state) => state.order;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
+export const restaurantsTabSelector = (state) =>
+  state.restaurants.tab || 'menu';
 
 export const productsLoadingSelector = (state, props) =>
   state.products.loading[props.restaurantId];

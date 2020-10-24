@@ -10,6 +10,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  SET_TAB,
 } from './constants';
 import {
   usersLoadingSelector,
@@ -21,6 +22,11 @@ import {
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
 export const decrement = (id) => ({ type: DECREMENT, payload: { id } });
 export const remove = (id) => ({ type: REMOVE, payload: { id } });
+
+export const setTab = (tab) => ({
+  type: SET_TAB,
+  payload: { tab },
+});
 
 export const addReview = (review, restaurantId) => ({
   type: ADD_REVIEW,
