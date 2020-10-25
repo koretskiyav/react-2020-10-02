@@ -18,6 +18,10 @@ import styles from './menu.module.css';
 class Menu extends React.Component {
   static propTypes = {
     menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+    loaded: PropTypes.bool,
+    loading: PropTypes.bool,
+    loadProducts: PropTypes.func.isRequired,
+    restaurantId: PropTypes.string.isRequired,
   };
 
   state = { error: null };
@@ -44,7 +48,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { menu, loading } = this.props;
+    const { menu, loading, restaurantId } = this.props;
 
     if (loading) {
       return <Loader />;
@@ -58,7 +62,7 @@ class Menu extends React.Component {
       <div className={styles.menu}>
         <div>
           {menu.map((id) => (
-            <Product key={id} id={id} />
+            <Product key={id} id={id} restaurantId={restaurantId} />
           ))}
         </div>
         <div>
