@@ -26,10 +26,23 @@ export const reviewsLoadedSelector = (state, props) =>
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
+export const reataurantsByProductsSelector = createSelector(
+  restaurantsSelector,
+  (restaurants) =>
+    Object.values(restaurants).reduce(
+      (acc, { id, menu }) => ({
+        ...acc,
+        ...menu.reduce((res, productId) => ({ ...res, [productId]: id }), {}),
+      }),
+      {}
+    )
+);
+
 export const orderProductsSelector = createSelector(
   productsSelector,
   orderSelector,
-  (products, order) => {
+  reataurantsByProductsSelector,
+  (products, order, reataurantsByProducts) => {
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
@@ -37,6 +50,7 @@ export const orderProductsSelector = createSelector(
         product,
         amount: order[product.id],
         subtotal: order[product.id] * product.price,
+        restaurantId: reataurantsByProducts[product.id],
       }));
   }
 );
