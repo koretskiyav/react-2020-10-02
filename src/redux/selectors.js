@@ -27,7 +27,8 @@ export const usersLoadedSelector = (state) => state.users.loaded;
 export const orderProductsSelector = createSelector(
   productsSelector,
   orderSelector,
-  (products, order) => {
+  restaurantsSelector,
+  (products, order, restaurants) => {
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
@@ -35,6 +36,9 @@ export const orderProductsSelector = createSelector(
         product,
         amount: order[product.id],
         subtotal: order[product.id] * product.price,
+        restaurant: Object.values(restaurants).find((restaurant) =>
+          restaurant.menu.find((item) => item === product.id)
+        ).id,
       }));
   }
 );

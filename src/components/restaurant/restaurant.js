@@ -6,25 +6,49 @@ import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
-import Tabs from '../tabs';
 import { connect } from 'react-redux';
 import { averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
-  const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
-    {
-      title: 'Reviews',
-      content: <Reviews reviews={reviews} restaurantId={id} />,
-    },
-  ];
+import { NavLink, Route, Switch, Redirect } from 'react-router-dom';
+import styles from './restaurant.module.css';
 
+const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
   return (
     <div>
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
-      <Tabs tabs={tabs} />
+      <div className={styles.tabs}>
+        <NavLink
+          key={'menu'}
+          to={`/restaurants/${id}/menu`}
+          className={styles.tab}
+          activeClassName={styles.active}
+        >
+          Menu
+        </NavLink>
+        <NavLink
+          key={'reviews'}
+          to={`/restaurants/${id}/reviews`}
+          className={styles.tab}
+          activeClassName={styles.active}
+        >
+          Reviews
+        </NavLink>
+      </div>
+      <Switch>
+        <Route
+          path="/restaurants/:restId/Menu"
+          render={(props) => <Menu {...props} menu={menu} restaurantId={id} />}
+        />
+        <Route
+          path="/restaurants/:restId/Reviews"
+          render={(props) => (
+            <Reviews {...props} reviews={reviews} restaurantId={id} />
+          )}
+        />
+        <Redirect from="/restaurants/:restId/" to="/restaurants/:restId/menu" />
+      </Switch>
     </div>
   );
 };
