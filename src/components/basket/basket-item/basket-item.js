@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import cn from 'classnames';
 import { increment, decrement, remove } from '../../../redux/actions';
@@ -12,11 +13,14 @@ function BasketItem({
   increment,
   decrement,
   remove,
+  restaurantId,
 }) {
   return (
     <div className={styles.basketItem}>
       <div className={styles.name}>
-        <span>{product.name}</span>
+        <Link to={`/restaurants/${restaurantId}/menu`}>
+          <span>{product.name}</span>
+        </Link>
       </div>
       <div className={styles.info}>
         <div className={styles.counter}>

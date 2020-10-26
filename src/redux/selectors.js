@@ -24,10 +24,37 @@ export const reviewsLoadedSelector = (state, props) =>
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
+export const restaurantsListSelector = createSelector(
+  restaurantsSelector,
+  Object.values
+);
+
+const restaurantIdSelector = createSelector(
+  restaurantsListSelector,
+  (restaurants) =>
+    restaurants
+      .map((restaurant) => {
+        const { id: restaurantId } = restaurant;
+        return restaurant.menu.map((productId) => ({
+          productId,
+          restaurantId,
+        }));
+      })
+      .flat()
+      .reduce(
+        (acc, { productId, restaurantId }) => ({
+          ...acc,
+          [productId]: restaurantId,
+        }),
+        {}
+      )
+);
+
 export const orderProductsSelector = createSelector(
   productsSelector,
   orderSelector,
-  (products, order) => {
+  restaurantIdSelector,
+  (products, order, restaurantByProductId) => {
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
@@ -35,6 +62,7 @@ export const orderProductsSelector = createSelector(
         product,
         amount: order[product.id],
         subtotal: order[product.id] * product.price,
+        restaurantId: restaurantByProductId[product.id],
       }));
   }
 );
@@ -45,10 +73,6 @@ export const totalSelector = createSelector(
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
 
-export const restaurantsListSelector = createSelector(
-  restaurantsSelector,
-  Object.values
-);
 export const productAmountSelector = getById(orderSelector, 0);
 export const productSelector = getById(productsSelector);
 const reviewSelector = getById(reviewsSelector);
