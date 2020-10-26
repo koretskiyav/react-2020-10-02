@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Route } from 'react-router-dom';
 
 import { loadProducts } from '../../redux/actions';
 import {
@@ -44,7 +45,7 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { menu, loading } = this.props;
+    const { menu, loading, restaurantId } = this.props;
 
     if (loading) {
       return <Loader />;
@@ -62,7 +63,7 @@ class Menu extends React.Component {
           ))}
         </div>
         <div>
-          <Basket />
+          <Basket restaurantId={restaurantId} />
         </div>
       </div>
     );
