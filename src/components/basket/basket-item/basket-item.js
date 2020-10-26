@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import { Link } from 'react-router-dom';
 import cn from 'classnames';
 import { increment, decrement, remove } from '../../../redux/actions';
+import { restaurantsListSelector } from '../../../redux/selectors';
 import Button from '../../button';
+
 import styles from './basket-item.module.css';
 
 function BasketItem({
@@ -12,11 +16,17 @@ function BasketItem({
   increment,
   decrement,
   remove,
+  restaurantsList,
 }) {
+  const restaurantId = restaurantsList.find((restaurant) =>
+    restaurant.menu.includes(product.id)
+  ).id;
   return (
     <div className={styles.basketItem}>
       <div className={styles.name}>
-        <span>{product.name}</span>
+        <Link to={`/restaurants/${restaurantId}/menu`}>
+          <span>{product.name}</span>
+        </Link>
       </div>
       <div className={styles.info}>
         <div className={styles.counter}>
@@ -46,4 +56,9 @@ function BasketItem({
   );
 }
 
-export default connect(null, { increment, decrement, remove })(BasketItem);
+export default connect(
+  createStructuredSelector({
+    restaurantsList: restaurantsListSelector,
+  }),
+  { increment, decrement, remove }
+)(BasketItem);
