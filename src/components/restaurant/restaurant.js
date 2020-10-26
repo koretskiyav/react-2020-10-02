@@ -9,13 +9,17 @@ import Rate from '../rate';
 import Tabs from '../tabs';
 import { connect } from 'react-redux';
 import { averageRatingSelector } from '../../redux/selectors';
+import { Link, Route } from 'react-router-dom';
 
-const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
+const Restaurant = ({ id, name, menu, reviews, averageRating, match }) => {
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
+    {
+      title: 'Menu',
+      link: `/restaurants/${id}/menu`,
+    },
     {
       title: 'Reviews',
-      content: <Reviews reviews={reviews} restaurantId={id} />,
+      link: `/restaurants/${id}/reviews`,
     },
   ];
 
@@ -25,6 +29,16 @@ const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
       <Tabs tabs={tabs} />
+      <Route
+        exact
+        path="/restaurants/:restId/menu"
+        render={() => <Menu menu={menu} restaurantId={id} />}
+      />
+      <Route
+        exact
+        path="/restaurants/:restId/reviews"
+        render={() => <Reviews reviews={reviews} restaurantId={id} />}
+      />
     </div>
   );
 };
