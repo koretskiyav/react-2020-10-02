@@ -20,7 +20,10 @@ class Menu extends React.Component {
     menu: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
   };
 
-  state = { error: null };
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
 
   loadProductsIfNeeded = () => {
     const { loadProducts, restaurantId, loading, loaded } = this.props;

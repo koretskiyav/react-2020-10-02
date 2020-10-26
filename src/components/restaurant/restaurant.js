@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 
@@ -6,25 +6,63 @@ import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
-import Tabs from '../tabs';
 import { connect } from 'react-redux';
-import { averageRatingSelector } from '../../redux/selectors';
+import {
+  averageRatingSelector,
+  restaurantsLoadedSelector,
+} from '../../redux/selectors';
+import { NavLink } from 'react-router-dom';
+import styles from './restaurant.module.css';
+import { loadRestaurants } from '../../redux/actions';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 
-const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
-  const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} restaurantId={id} /> },
-    {
-      title: 'Reviews',
-      content: <Reviews reviews={reviews} restaurantId={id} />,
-    },
-  ];
+const Restaurant = ({
+  id,
+  name,
+  menu,
+  reviews,
+  averageRating,
+  restaurantsLoaded,
+}) => {
+  let { path, url } = useRouteMatch();
+  useEffect(() => {
+    if (!restaurantsLoaded) {
+      loadRestaurants();
+    }
+  }, [restaurantsLoaded]);
 
   return (
     <div>
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
-      <Tabs tabs={tabs} />
+      <div className={styles.tabs}>
+        <NavLink
+          key={'menu' + id}
+          to={`${url}`}
+          exact={true}
+          className={styles.tab}
+          activeClassName={styles.active}
+        >
+          Menu
+        </NavLink>
+        <NavLink
+          key={'reviews' + id}
+          to={`${url}/reviews`}
+          className={styles.tab}
+          activeClassName={styles.active}
+        >
+          Reviews
+        </NavLink>
+      </div>
+      <Switch>
+        <Route exact path={path}>
+          <Menu menu={menu} restaurantId={id} />
+        </Route>
+        <Route path={`${path}/reviews`}>
+          <Reviews reviews={reviews} restaurantId={id} />
+        </Route>
+      </Switch>
     </div>
   );
 };
@@ -40,5 +78,7 @@ Restaurant.propTypes = {
 export default connect(
   createStructuredSelector({
     averageRating: averageRatingSelector,
-  })
+    restaurantsLoaded: restaurantsLoadedSelector,
+  }),
+  { loadRestaurants }
 )(Restaurant);

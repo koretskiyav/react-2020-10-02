@@ -8,6 +8,8 @@ import styles from './reviews.module.css';
 import { loadReviews, loadUsers } from '../../redux/actions';
 import { connect } from 'react-redux';
 import {
+  restaurantReviewsSelector,
+  restaurantsLoadedSelector,
   reviewsLoadedSelector,
   usersLoadedSelector,
 } from '../../redux/selectors';
@@ -45,8 +47,10 @@ Reviews.propTypes = {
 };
 
 const mapStateToProps = createStructuredSelector({
+  restaurantLoaded: restaurantsLoadedSelector,
   reviewsLoaded: reviewsLoadedSelector,
   usersLoaded: usersLoadedSelector,
+  reviews: restaurantReviewsSelector,
 });
 
 export default connect(mapStateToProps, { loadReviews, loadUsers })(Reviews);
