@@ -29,7 +29,7 @@ function RestaurantsPage({
       <div>
         <h1>Select restaurant:</h1>
         {restaurants.map(({ id, name }) => (
-          <Link key={id} to={`/restaurants/${id}`}>
+          <Link key={id} to={`/restaurants/${id}/menu`}>
             <p>{name}</p>
           </Link>
         ))}
@@ -37,7 +37,7 @@ function RestaurantsPage({
     );
   }
 
-  return <Route path="/restaurants/:restId" component={Restaurants} />;
+  return <Route path="/restaurants/:restId/:tabId" component={Restaurants} />;
 }
 
 export default connect(
