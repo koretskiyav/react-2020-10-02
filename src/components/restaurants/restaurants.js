@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
@@ -19,7 +19,7 @@ const Restaurants = ({ restaurants, match }) => {
         {restaurants.map(({ id, name }) => (
           <NavLink
             key={id}
-            to={`/restaurants/${id}`}
+            to={`/restaurants/${id}/menu`}
             className={styles.tab}
             activeClassName={styles.active}
           >
@@ -27,7 +27,10 @@ const Restaurants = ({ restaurants, match }) => {
           </NavLink>
         ))}
       </div>
-      <Restaurant {...restaurant} />
+      <Route
+        path="/restaurants/:restId/:section"
+        render={(props) => <Restaurant {...props} {...restaurant} />}
+      />
     </>
   );
 };
