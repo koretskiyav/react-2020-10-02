@@ -21,12 +21,12 @@ const Reviews = ({
   loadUsers,
   usersLoaded,
   reviewsLoaded,
-  ...props
+  restaurantId,
 }) => {
   useEffect(() => {
     loadUsers();
-    loadReviews(props.match.params.id);
-  }, [props.match.params.id]); // eslint-disable-line
+    loadReviews(restaurantId);
+  }, [restaurantId]); // eslint-disable-line
 
   if (!usersLoaded || !reviewsLoaded) return <Loader />;
 
@@ -35,7 +35,7 @@ const Reviews = ({
       {reviews.map((id) => (
         <Review key={id} id={id} />
       ))}
-      <ReviewForm restaurantId={props.match.params.id} />
+      <ReviewForm restaurantId={restaurantId} />
     </div>
   );
 };

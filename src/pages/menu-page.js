@@ -12,6 +12,10 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 function MenuPage({ loadRestaurants, loading, loaded, match }) {
+  const {
+    params: { id },
+    ...props
+  } = match;
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, []); // eslint-disable-line
@@ -21,7 +25,7 @@ function MenuPage({ loadRestaurants, loading, loaded, match }) {
   return (
     <div>
       <Restaurants match={match} />
-      <Menu match={match} />
+      <Menu restaurantId={id} />
     </div>
   );
 }

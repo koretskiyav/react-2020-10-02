@@ -24,9 +24,9 @@ class Menu extends React.Component {
   state = { error: null };
 
   loadProductsIfNeeded = () => {
-    const { loadProducts, loading, loaded } = this.props;
+    const { loadProducts, restaurantId, loading, loaded } = this.props;
     if (!loading && !loaded) {
-      loadProducts(this.props.match.params.id);
+      loadProducts(restaurantId);
     }
   };
 

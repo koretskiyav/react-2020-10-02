@@ -14,16 +14,14 @@ export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
 export const productsLoadingSelector = (state, props) =>
-  state.products.loading[props.match.params.id];
-export const productsLoadedSelector = (state, props) => {
-  return state.products.loaded[props.match.params.id];
-};
-export const reviewsLoadingSelector = (state, props) => {
-  return state.reviews.loading[props.match.params.id];
-};
-export const reviewsLoadedSelector = (state, props) => {
-  return state.reviews.loaded[props.match.params.id];
-};
+  state.products.loading[props.restaurantId];
+export const productsLoadedSelector = (state, props) =>
+  state.products.loaded[props.restaurantId];
+
+export const reviewsLoadingSelector = (state, props) =>
+  state.reviews.loading[props.restaurantId];
+export const reviewsLoadedSelector = (state, props) =>
+  state.reviews.loaded[props.restaurantId];
 
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
@@ -73,7 +71,7 @@ export const restaurantsListSelector = createSelector(
 export const productAmountSelector = getById(orderSelector, 0);
 export const productSelector = getById(productsSelector);
 const reviewSelector = getById(reviewsSelector);
-const restaurantSelector = getById(restaurantsSelector, {}, 'match.params.id');
+const restaurantSelector = getById(restaurantsSelector, {}, 'restaurantId');
 
 export const reviewWitUserSelector = createSelector(
   reviewSelector,
@@ -97,9 +95,7 @@ export const averageRatingSelector = createSelector(
 
 export const restaurantMenuSelector = createSelector(
   restaurantSelector,
-  (restaurant) => {
-    return restaurant.menu ? restaurant.menu : [];
-  }
+  (restaurant) => (restaurant.menu ? restaurant.menu : [])
 );
 
 export const restaurantReviewsSelector = createSelector(

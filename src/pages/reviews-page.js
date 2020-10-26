@@ -21,7 +21,7 @@ function RewiewsPage({ loadRestaurants, loading, loaded, match }) {
   return (
     <div>
       <Restaurants match={match} />
-      <Reviews match={match} />
+      <Reviews restaurantId={match.params.id} />
     </div>
   );
 }

@@ -43,10 +43,10 @@ export const loadReviews = (restaurantId) => async (dispatch, getState) => {
   const state = getState();
 
   const loading = reviewsLoadingSelector(state, {
-    match: { params: { id: restaurantId } },
+    restaurantId,
   });
   const loaded = reviewsLoadedSelector(state, {
-    match: { params: { id: restaurantId } },
+    restaurantId,
   });
 
   if (loading || loaded) return;

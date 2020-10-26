@@ -3,11 +3,8 @@ import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 import { NavLink } from 'react-router-dom';
 
-import Menu from '../menu';
-import Reviews from '../reviews';
 import Banner from '../banner';
 import Rate from '../rate';
-import Tabs from '../tabs';
 import { connect } from 'react-redux';
 import { averageRatingSelector } from '../../redux/selectors';
 
