@@ -58,7 +58,7 @@ export const reviewWitUserSelector = createSelector(
   usersSelector,
   (review, users) => ({
     ...review,
-    user: users[review.userId]?.name,
+    user: users[review.userId] ?.name,
   })
 );
 
@@ -66,9 +66,17 @@ export const averageRatingSelector = createSelector(
   reviewsSelector,
   (_, { reviews }) => reviews,
   (reviews, ids) => {
-    const ratings = ids.map((id) => reviews[id]?.rating || 0);
+    const ratings = ids.map((id) => reviews[id] ?.rating || 0);
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
+  }
+);
+
+export const getRestaurantByProductIdSelector = createSelector(
+  restaurantsListSelector,
+  (_, { product }) => product,
+  (restaurants, product) => {
+    return restaurants.find(({ menu }) => menu.includes(product.id));
   }
 );
