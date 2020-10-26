@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Link, Route } from 'react-router-dom';
 import Restaurants from '../components/restaurants';
+import Reviews from '../components/reviews';
 import Loader from '../components/loader';
 import {
   restaurantsListSelector,
@@ -11,33 +11,19 @@ import { loadRestaurants } from '../redux/actions';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-function RestaurantsPage({
-  restaurants,
-  loadRestaurants,
-  loading,
-  loaded,
-  match,
-}) {
+function RewiewsPage({ loadRestaurants, loading, loaded, match }) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, []); // eslint-disable-line
 
   if (loading || !loaded) return <Loader />;
 
-  if (match.isExact) {
-    return (
-      <div>
-        <h1>Select restaurant:</h1>
-        {restaurants.map(({ id, name }) => (
-          <Link key={id} to={`/restaurants/${id}`}>
-            <p>{name}</p>
-          </Link>
-        ))}
-      </div>
-    );
-  }
-
-  return <Route path="/restaurants/:id" component={Restaurants} />;
+  return (
+    <div>
+      <Restaurants match={match} />
+      <Reviews restaurantId={match.params.id} />
+    </div>
+  );
 }
 
 export default connect(
@@ -47,4 +33,4 @@ export default connect(
     loaded: restaurantsLoadedSelector,
   }),
   { loadRestaurants }
-)(RestaurantsPage);
+)(RewiewsPage);

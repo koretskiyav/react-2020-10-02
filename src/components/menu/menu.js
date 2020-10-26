@@ -7,6 +7,7 @@ import { loadProducts } from '../../redux/actions';
 import {
   productsLoadingSelector,
   productsLoadedSelector,
+  restaurantMenuSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
@@ -45,7 +46,6 @@ class Menu extends React.Component {
 
   render() {
     const { menu, loading } = this.props;
-
     if (loading) {
       return <Loader />;
     }
@@ -71,6 +71,7 @@ class Menu extends React.Component {
 
 export default connect(
   createStructuredSelector({
+    menu: restaurantMenuSelector,
     loading: productsLoadingSelector,
     loaded: productsLoadedSelector,
   }),

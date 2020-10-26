@@ -1,7 +1,9 @@
 import { createSelector } from 'reselect';
 import { getById } from './utils';
 
-const restaurantsSelector = (state) => state.restaurants.entities;
+const restaurantsSelector = (state) => {
+  return state.restaurants.entities;
+};
 const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
@@ -24,10 +26,25 @@ export const reviewsLoadedSelector = (state, props) =>
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
 
+const restaurantsProductSelector = createSelector(
+  restaurantsSelector,
+  (restaurants) => {
+    const resturantProducts = Object.values(restaurants).reduce((acc, i) => {
+      const temp = i.menu.reduce((ac, ii) => {
+        return { [ii]: i.id, ...ac };
+      }, {});
+      return { ...temp, ...acc };
+    }, {});
+
+    return resturantProducts;
+  }
+);
+
 export const orderProductsSelector = createSelector(
   productsSelector,
   orderSelector,
-  (products, order) => {
+  restaurantsProductSelector,
+  (products, order, restaurantProducts) => {
     return Object.keys(order)
       .filter((productId) => order[productId] > 0)
       .map((productId) => products[productId])
@@ -35,6 +52,7 @@ export const orderProductsSelector = createSelector(
         product,
         amount: order[product.id],
         subtotal: order[product.id] * product.price,
+        id: restaurantProducts[product.id],
       }));
   }
 );
@@ -49,9 +67,11 @@ export const restaurantsListSelector = createSelector(
   restaurantsSelector,
   Object.values
 );
+
 export const productAmountSelector = getById(orderSelector, 0);
 export const productSelector = getById(productsSelector);
 const reviewSelector = getById(reviewsSelector);
+const restaurantSelector = getById(restaurantsSelector, {}, 'restaurantId');
 
 export const reviewWitUserSelector = createSelector(
   reviewSelector,
@@ -70,5 +90,17 @@ export const averageRatingSelector = createSelector(
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
+  }
+);
+
+export const restaurantMenuSelector = createSelector(
+  restaurantSelector,
+  (restaurant) => (restaurant.menu ? restaurant.menu : [])
+);
+
+export const restaurantReviewsSelector = createSelector(
+  restaurantSelector,
+  (restaurant) => {
+    return restaurant.reviews ? restaurant.reviews : [];
   }
 );

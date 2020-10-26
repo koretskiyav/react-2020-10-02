@@ -21,13 +21,10 @@ function Basket({ title = 'Basket', total, orderProducts }) {
   return (
     <div className={styles.basket}>
       <h4 className={styles.title}>{title}</h4>
-      {orderProducts.map(({ product, amount, subtotal }) => (
-        <BasketItem
-          product={product}
-          amount={amount}
-          key={product.id}
-          subtotal={subtotal}
-        />
+      {orderProducts.map(({ product, amount, subtotal, id }) => (
+        <Link to={`/restaurants/${id}/menu`} key={product.id}>
+          <BasketItem product={product} amount={amount} subtotal={subtotal} />
+        </Link>
       ))}
       <hr className={styles.hr} />
       <BasketRow label="Sub-total" content={`${total} $`} />

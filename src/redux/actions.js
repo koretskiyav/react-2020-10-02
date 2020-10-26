@@ -41,8 +41,13 @@ export const loadProducts = (restaurantId) => ({
 
 export const loadReviews = (restaurantId) => async (dispatch, getState) => {
   const state = getState();
-  const loading = reviewsLoadingSelector(state, { restaurantId });
-  const loaded = reviewsLoadedSelector(state, { restaurantId });
+
+  const loading = reviewsLoadingSelector(state, {
+    restaurantId,
+  });
+  const loaded = reviewsLoadedSelector(state, {
+    restaurantId,
+  });
 
   if (loading || loaded) return;
   dispatch({ type: LOAD_REVIEWS + REQUEST, restaurantId });
