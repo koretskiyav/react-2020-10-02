@@ -72,3 +72,11 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const getRestaurantByProductIdSelector = createSelector(
+  restaurantsListSelector,
+  (_, { product }) => product,
+  (restaurants, product) => {
+    return restaurants.find(({ menu }) => menu.includes(product.id));
+  }
+);
