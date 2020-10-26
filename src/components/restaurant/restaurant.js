@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
-
+import { Route, Switch, Link } from 'react-router-dom';
 import Menu from '../menu';
 import Reviews from '../reviews';
 import Banner from '../banner';
@@ -24,7 +24,18 @@ const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
       <Banner heading={name}>
         {!!averageRating && <Rate value={averageRating} />}
       </Banner>
-      <Tabs tabs={tabs} />
+        <Link to={`/restaurants/${id}/menu`}> Menu </Link>
+        <Link to={`/restaurants/${id}/reviews`}> Reviews </Link>
+        <Switch>
+            <Route
+                path="/restaurants/:id/menu"
+                render={() => <Menu menu={menu} restaurantId={id} />}
+            />
+            <Route
+                path="/restaurants/:id/reviews"
+                render={() => <Reviews reviews={reviews} restaurantId={id} />}
+            />
+        </Switch>
     </div>
   );
 };
