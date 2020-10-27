@@ -8,8 +8,11 @@ import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
 import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import { UserConsumer } from '../../context/user-context';
 
 function Basket({ title = 'Basket', total, orderProducts }) {
+  // console.log('render Basket');
+  // const { name } = useContext(userContext);
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -20,7 +23,11 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 
   return (
     <div className={styles.basket}>
-      <h4 className={styles.title}>{title}</h4>
+      <h4 className={styles.title}>
+        {/* {`${name}'s Basket`} */}
+        {/* <UserConsumer children={({ name }) => `${name}'s Basket`} /> */}
+        <UserConsumer>{({ name }) => `${name}'s Basket`}</UserConsumer>
+      </h4>
       {orderProducts.map(({ product, amount, subtotal, restaurantId }) => (
         <BasketItem
           product={product}
