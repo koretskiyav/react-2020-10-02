@@ -8,7 +8,7 @@ import Tabs from '../tabs';
 import { restaurantsListSelector } from '../../redux/selectors';
 
 const Restaurants = ({ restaurants, match }) => {
-  const { restId, tabId } = match.params;
+  const { restId, tabId = 'menu' } = match.params;
 
   const restaurant = restaurants.find((restaurant) => restaurant.id === restId);
 
