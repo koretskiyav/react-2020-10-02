@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 import Restaurant from '../restaurant';
 import Tabs from '../tabs';
 
@@ -11,6 +12,10 @@ const Restaurants = ({ restaurants, match }) => {
   const { restId, tabId = 'menu' } = match.params;
 
   const restaurant = restaurants.find((restaurant) => restaurant.id === restId);
+  let defaultRestId;
+  if (!restId) {
+    defaultRestId = restaurants[0].id;
+  }
 
   const tabs = restaurants.map(({ id, name }) => ({
     title: name,
@@ -21,6 +26,13 @@ const Restaurants = ({ restaurants, match }) => {
     <>
       <Tabs tabs={tabs} />
       {restId && <Restaurant {...restaurant} />}
+      {defaultRestId && (
+        <Redirect
+          exact
+          from="/restaurants"
+          to={`/restaurants/${defaultRestId}/menu`}
+        />
+      )}
     </>
   );
 };

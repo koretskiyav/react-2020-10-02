@@ -47,7 +47,7 @@ router.post('/order', function (req, res, next) {
     if (total > 200) return reply(res, max(total), 3000, 400);
     return reply(res, 'ok', 3000);
   } catch {
-    return reply(res, 'wrong data', 1000, 400);
+    return reply(res, 'wrong data', 1000, 500);
   }
 });
 

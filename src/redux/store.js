@@ -17,4 +17,7 @@ const enhancer = applyMiddleware(
   logger
 );
 
-export default createStore(reducer, composeWithDevTools(enhancer));
+export default createStore(
+  reducer,
+  composeWithDevTools({ trace: true })(enhancer)
+);

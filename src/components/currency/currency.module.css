@@ -1,0 +1,6 @@
+.currency {
+  position: absolute;
+  color: var(--white);
+  right: 40px;
+  top: 0;
+}

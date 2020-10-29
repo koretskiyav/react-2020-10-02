@@ -1,23 +1,16 @@
-.reviews {
-  margin: 0 auto;
-  padding: 12px;
-  max-width: 884px;
-  width: 100%;
-}
-
-.reviews-item-animation-enter {
+.review-animation-enter {
   opacity: 0;
   transform: scale(0.9);
 }
-.reviews-item-animation-enter-active {
+.review-animation-enter-active {
   opacity: 1;
   transform: translateX(0);
   transition: opacity 3000ms, transform 3000ms;
 }
-.reviews-item-animation-exit {
+.review-animation-exit {
   opacity: 1;
 }
-.reviews-item-animation-exit-active {
+.review-animation-exit-active {
   opacity: 0;
   transform: scale(0.9);
   transition: opacity 3000ms, transform 3000ms;

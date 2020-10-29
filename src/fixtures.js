@@ -381,10 +381,35 @@ const normalizedUsers = [
   },
 ];
 
+const currencies = {
+  usd: {
+    code: 'usd',
+    signPosition: 'before',
+    sign: '$',
+    rate: 1,
+    isDefault: true,
+  },
+  euro: {
+    code: 'euro',
+    signPosition: 'before',
+    sign: '€',
+    rate: 0.8,
+    isDefault: false,
+  },
+  uah: {
+    code: 'uah',
+    signPosition: 'after',
+    sign: '₴',
+    rate: 28.5,
+    isDefault: true,
+  },
+};
+
 export {
   restaurants,
   normalizedProducts,
   normalizedRestaurants,
   normalizedReviews,
   normalizedUsers,
+  currencies,
 };

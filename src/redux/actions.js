@@ -11,12 +11,14 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  PLACE_ORDER,
 } from './constants';
 import {
   usersLoadingSelector,
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  orderLoadingSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
@@ -66,4 +68,36 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const placeOrder = (orderedProducts) => async (dispatch, getState) => {
+  const state = getState();
+  const loading = orderLoadingSelector(state);
+  if (loading) return;
+  dispatch({ type: PLACE_ORDER + REQUEST });
+  try {
+    const response = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(
+        orderedProducts.map((ordered) => ({
+          id: ordered.product.id,
+          amount: ordered.amount,
+        }))
+      ),
+    });
+    //todo make differen handle for 500 error - use redirect to 500 page
+    if (response.status !== 200 || !response.ok) {
+      let message;
+      if (response.status === 500) {
+        message = 'Internal server error! Maybe you sent wrong data!';
+      } else {
+        message = await response.json();
+      }
+      throw new Error(message);
+    }
+    dispatch({ type: PLACE_ORDER + SUCCESS });
+  } catch (error) {
+    dispatch({ type: PLACE_ORDER + FAILURE, error });
+  }
 };
