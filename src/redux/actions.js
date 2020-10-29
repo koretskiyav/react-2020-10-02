@@ -67,3 +67,8 @@ export const loadUsers = () => async (dispatch, getState) => {
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
 };
+
+export const changeCurrency = (currencyId) => ({
+  type: ADD_REVIEW,
+  payload: { currencyId },
+});
