@@ -8,17 +8,19 @@ import { increment, decrement } from '../../redux/actions';
 
 import Button from '../button';
 import { productAmountSelector, productSelector } from '../../redux/selectors';
+import Price from '../price/price';
 
 const Product = ({ product, amount = 0, increment, decrement }) => {
   if (!product) return null;
-
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>
+            <Price price={product.price} />
+          </div>
         </div>
         <div>
           <div className={styles.counter}>

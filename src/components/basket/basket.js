@@ -12,6 +12,7 @@ import BasketItem from './basket-item';
 import Button from '../button';
 import { orderProductsSelector, totalSelector } from '../../redux/selectors';
 import { UserConsumer } from '../../context/user-context';
+import Price from '../price/price';
 
 function Basket({ title = 'Basket', total, orderProducts }) {
   // console.log('render Basket');
@@ -48,9 +49,9 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={<Price price={total} />} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={<Price price={total} />} bold />
       <Link to="/checkout">
         <Button primary block>
           checkout
