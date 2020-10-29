@@ -8,9 +8,13 @@ const Price = ({ amount }) => {
     <CurrencyConsumer>
       {({ getCurrency }) => {
         const currency = getCurrency();
-        return currency
-          ? `${amount * currency.rate} ${currency.id.toUpperCase()}`
-          : amount;
+
+        if (!currency) {
+          return amount;
+        }
+
+        const price = (amount * currency.rate).toFixed(2);
+        return `${price} ${currency.id.toUpperCase()}`;
       }}
     </CurrencyConsumer>
   );

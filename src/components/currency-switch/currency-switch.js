@@ -10,12 +10,12 @@ const Header = () => {
   const nextIndex = index + 1 === currencyIds.length ? 0 : index + 1;
 
   return (
-    <h2
+    <span
       className={styles.switch}
       onClick={() => setCurrency(currencyIds[nextIndex])}
     >
       {currency.toUpperCase()}
-    </h2>
+    </span>
   );
 };
 
