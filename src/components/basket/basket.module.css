@@ -22,6 +22,14 @@
   margin-top: 22px;
 }
 
+.button:disabled {
+  cursor: not-allowed;
+}
+
+.error {
+  background: red;
+}
+
 @media all and (max-width: 767px) {
   .basket {
     padding: 20px 24px;
