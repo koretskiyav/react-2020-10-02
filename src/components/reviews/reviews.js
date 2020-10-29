@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 import { loadReviews, loadUsers } from '../../redux/actions';
 import { connect } from 'react-redux';
@@ -31,9 +32,19 @@ const Reviews = ({
 
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
-        <Review key={id} id={id} />
-      ))}
+      <TransitionGroup>
+        {reviews.map((id) => (
+          <CSSTransition
+            timeout={500}
+            classNames={{
+              enter: styles.enter,
+              enterActive: styles.enterActive,
+            }}
+          >
+            <Review id={id} />
+          </CSSTransition>
+        ))}
+      </TransitionGroup>
       <ReviewForm restaurantId={restaurantId} />
     </div>
   );

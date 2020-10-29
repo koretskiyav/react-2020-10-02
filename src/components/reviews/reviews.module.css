@@ -4,3 +4,15 @@
   max-width: 884px;
   width: 100%;
 }
+
+.enter {
+  opacity: 0;
+  transform: scaleY(0);
+  height: 0;
+}
+.enterActive {
+  opacity: 1;
+  height: 200px;
+  transform: scaleY(1);
+  transition: all 500ms ease-in;
+}
