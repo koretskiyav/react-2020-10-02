@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../header';
 import Basket from '../basket';
 import RestaurantsPage from '../../pages/restaurants-page';
 import { UserProvider } from '../../context/user-context';
+import OrderResult from '../order-result/order-result';
+import { currencies, CurrencyProvider } from '../../context/currency-context';
 
 export default () => {
   const [name, setName] = useState('Igor');
+  const [currency, setCurrency] = useState(currencies['usd']);
+
   return (
     <div>
       <UserProvider value={{ name, setName }}>
-        <Header />
-        <Switch>
-          <Route path="/checkout" component={Basket} />
-          <Route path="/restaurants" component={RestaurantsPage} />
-          <Route path="/error" component={() => <h1>Error Page</h1>} />
-          <Route path="/" component={() => '404 - not found'} />
-        </Switch>
+        <CurrencyProvider value={{ currencies, currency, setCurrency }}>
+          <Header />
+          <Switch>
+            <Route exact path="/checkout" component={Basket} />
+            <Route exact path="/checkout/result" component={OrderResult} />
+            <Route path="/restaurants" component={RestaurantsPage} />
+            <Route path="/error" component={() => <h1>Error Page</h1>} />
+            <Redirect exact from={'/'} to={'/restaurants'} />
+          </Switch>
+        </CurrencyProvider>
       </UserProvider>
     </div>
   );

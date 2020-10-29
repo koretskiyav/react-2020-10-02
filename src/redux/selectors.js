@@ -6,7 +6,7 @@ const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -23,6 +23,10 @@ export const reviewsLoadedSelector = (state, props) =>
 
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
+
+export const orderPushingSelector = (state) => state.order.pushing;
+export const orderPushedSelector = (state) => state.order.pushed;
+export const orderPushErrorSelector = (state) => state.order.error;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -88,3 +92,12 @@ export const averageRatingSelector = createSelector(
     );
   }
 );
+
+export const orderToServerSelector = createSelector(orderSelector, (order) => {
+  return Object.keys(order)
+    .filter((productId) => order[productId] > 0)
+    .reduce((acc, productId) => {
+      acc.push({ id: productId, amount: order[productId] });
+      return acc;
+    }, []);
+});
