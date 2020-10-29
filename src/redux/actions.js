@@ -11,12 +11,16 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  MAKE_ORDER,
 } from './constants';
 import {
   usersLoadingSelector,
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  allOrdersSelector,
+  orderLoadingSelector,
+  orderLoadedSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
@@ -66,4 +70,32 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const makeOrder = (ids) => async (dispatch, getState) => {
+  const state = getState();
+  const ordersArray = allOrdersSelector(state);
+  const loading = orderLoadingSelector(state);
+
+  dispatch({ type: MAKE_ORDER + REQUEST, payload: { ids } });
+
+  if (loading) return;
+
+  const response = await fetch('/api/order', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify([...ordersArray]),
+  }).then((res) => res.json());
+
+  if (response === 'ok') {
+    dispatch({
+      type: MAKE_ORDER + SUCCESS,
+      response: response,
+      payload: { ids },
+    });
+    dispatch(replace('/success'));
+  } else {
+    dispatch({ type: MAKE_ORDER + FAILURE, error: response });
+    dispatch(replace('/error'));
+  }
 };

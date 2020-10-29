@@ -10,12 +10,34 @@ import './basket.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  pathnameSelector,
+  totalSelector,
+  ordersIdsSelector,
+  orderLoadingSelector,
+  orderLoadedSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../context/user-context';
+import { makeOrder } from '../../redux/actions';
+import Loader from '../loader';
+import Price from '../price';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  pathname,
+  makeOrder,
+  ordersIdsSelector,
+  loading,
+}) {
   // console.log('render Basket');
   // const { name } = useContext(userContext);
+  if (loading) {
+    return <Loader />;
+  }
+
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -23,6 +45,14 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       </div>
     );
   }
+
+  const onOrderSubmit = () => {
+    if (pathname !== '/checkout') {
+      return;
+    }
+
+    makeOrder(ordersIdsSelector);
+  };
 
   return (
     <div className={styles.basket}>
@@ -41,18 +71,18 @@ function Basket({ title = 'Basket', total, orderProducts }) {
             <BasketItem
               product={product}
               amount={amount}
-              subtotal={subtotal}
+              subtotal={<Price amount={subtotal} />}
               restaurantId={restaurantId}
             />
           </CSSTransition>
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={<Price amount={total} />} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={<Price amount={total} />} bold />
       <Link to="/checkout">
-        <Button primary block>
+        <Button primary block onClick={onOrderSubmit}>
           checkout
         </Button>
       </Link>
@@ -63,6 +93,9 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  pathname: pathnameSelector,
+  ordersIdsSelector: ordersIdsSelector,
+  loading: orderLoadingSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+export default connect(mapStateToProps, { makeOrder })(Basket);
