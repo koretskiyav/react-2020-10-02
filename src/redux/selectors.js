@@ -5,8 +5,22 @@ const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
+const orderSelector = (state) => state.order.entities;
 
-const orderSelector = (state) => state.order;
+export const pathnameSelector = (state) => state.router.location.pathname;
+
+export const ordersAmountsSelector = createSelector(
+  orderSelector,
+  Object.values
+);
+
+export const ordersIdsSelector = createSelector(orderSelector, Object.keys);
+
+export const allOrdersSelector = createSelector(
+  ordersAmountsSelector,
+  ordersIdsSelector,
+  (amounts, ids) => ids.map((id, i) => ({ id: id, amount: amounts[i] }))
+);
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -23,6 +37,10 @@ export const reviewsLoadedSelector = (state, props) =>
 
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
+
+export const orderLoadingSelector = (state) => state.order.loading;
+
+export const orderErrorSelector = (state) => state.order.error;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
