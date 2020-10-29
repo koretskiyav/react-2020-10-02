@@ -17,7 +17,6 @@ function RestaurantsPage({
   loading,
   loaded,
   match,
-  history,
 }) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
