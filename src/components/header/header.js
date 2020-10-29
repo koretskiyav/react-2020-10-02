@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <header className={styles.header} onClick={() => setName('Lena')}>
-      <h2 style={{ left: '20px' }}>
+      <h2 style={{ left: '20px', width: '350px' }}>
         Выберете валюту:
         <a
           href="/"
