@@ -19,8 +19,11 @@ import {
 } from '../../redux/selectors';
 import { makeOrder } from '../../redux/actions';
 import { UserConsumer } from '../../context/user-context';
+import { useMoney } from '../../hooks/use-money';
 
 function Basket({ total, orderProducts, checkoutMatch, makeOrder, loading }) {
+  const m = useMoney();
+
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -56,9 +59,9 @@ function Basket({ total, orderProducts, checkoutMatch, makeOrder, loading }) {
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={m(total)} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={m(total)} bold />
       {checkoutMatch ? (
         <Button primary block onClick={makeOrder}>
           make order
