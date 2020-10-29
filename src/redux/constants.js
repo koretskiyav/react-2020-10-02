@@ -11,3 +11,7 @@ export const LOAD_USERS = 'LOAD_USERS';
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';
 export const FAILURE = '_FAILURE';
+
+export const POST_ORDER = 'POST_ORDER';
+export const CLEAR_ORDER = 'CLEAR_ORDER';
+export const CLEAR_ERROR = 'CLEAR_ERROR';

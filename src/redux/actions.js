@@ -11,6 +11,9 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  POST_ORDER,
+  CLEAR_ORDER,
+  CLEAR_ERROR,
 } from './constants';
 import {
   usersLoadingSelector,
@@ -66,4 +69,28 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const postOrder = (order) => {
+  return {
+    type: POST_ORDER,
+    CallAPI: 'api/order',
+    options: {
+      method: 'POST',
+      headers: { 'Content-type': 'application/json' },
+      body: JSON.stringify(order),
+    },
+  };
+};
+
+export const clearOrder = () => {
+  return {
+    type: CLEAR_ORDER,
+  };
+};
+
+export const clearError = () => {
+  return {
+    type: CLEAR_ERROR,
+  };
 };
