@@ -10,12 +10,32 @@ import './basket.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import Price from '../price';
+import {
+  orderProductsSelector,
+  orderPushedSelector,
+  orderPushErrorSelector,
+  orderPushingSelector,
+  totalSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../context/user-context';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+import { pushOrder } from '../../redux/actions';
+import Loader from '../loader';
+
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  pushing,
+  pushed,
+  pushOrder,
+  match,
+}) {
   // console.log('render Basket');
   // const { name } = useContext(userContext);
+  if (pushing) return <Loader />;
+
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -23,6 +43,19 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       </div>
     );
   }
+
+  const checkoutButton =
+    match && match.path === '/checkout' ? (
+      <Button primary block onClick={pushOrder} disabled={pushed}>
+        checkout
+      </Button>
+    ) : (
+      <Link to="/checkout">
+        <Button primary block>
+          checkout
+        </Button>
+      </Link>
+    );
 
   return (
     <div className={styles.basket}>
@@ -48,14 +81,10 @@ function Basket({ title = 'Basket', total, orderProducts }) {
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={<Price price={total} />} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      <BasketRow label="total" content={<Price price={total} />} bold />
+      {checkoutButton}
     </div>
   );
 }
@@ -63,6 +92,8 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  pushing: orderPushingSelector,
+  pushed: orderPushedSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+export default connect(mapStateToProps, { pushOrder })(Basket);

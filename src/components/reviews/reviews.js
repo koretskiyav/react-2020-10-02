@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Review from './review';
 import ReviewForm from './review-form';
 import styles from './reviews.module.css';
+import animationStyles from './reviews-animation.module.css';
 
 import { loadReviews, loadUsers } from '../../redux/actions';
 import { connect } from 'react-redux';
@@ -13,6 +14,7 @@ import {
 } from '../../redux/selectors';
 
 import Loader from '../loader';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 const Reviews = ({
   reviews,
@@ -30,12 +32,18 @@ const Reviews = ({
   if (!usersLoaded || !reviewsLoaded) return <Loader />;
 
   return (
-    <div className={styles.reviews}>
+    <TransitionGroup className={styles.reviews}>
       {reviews.map((id) => (
-        <Review key={id} id={id} />
+        <CSSTransition
+          key={id}
+          timeout={500}
+          classNames={{ ...animationStyles }}
+        >
+          <Review key={id} id={id} />
+        </CSSTransition>
       ))}
       <ReviewForm restaurantId={restaurantId} />
-    </div>
+    </TransitionGroup>
   );
 };
 
