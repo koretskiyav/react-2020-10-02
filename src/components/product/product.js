@@ -7,6 +7,7 @@ import styles from './product.module.css';
 import { increment, decrement } from '../../redux/actions';
 
 import Button from '../button';
+import Price from '../price';
 import { productAmountSelector, productSelector } from '../../redux/selectors';
 
 const Product = ({ product, amount = 0, increment, decrement }) => {
@@ -18,7 +19,9 @@ const Product = ({ product, amount = 0, increment, decrement }) => {
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>
+            <Price amount={product.price} />
+          </div>
         </div>
         <div>
           <div className={styles.counter}>

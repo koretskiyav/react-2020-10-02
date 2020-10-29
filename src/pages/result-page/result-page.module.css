@@ -1,0 +1,13 @@
+.message {
+  margin: 20px;
+  padding: 20px;
+  color: var(--white);
+}
+
+.failure {
+  background: var(--orange);
+}
+
+.success {
+  background: var(--green);
+}
