@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { connect } from 'react-redux';
 import { Link, useLocation, Redirect } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -22,6 +22,8 @@ import { UserConsumer } from '../../context/user-context';
 
 import { postOrder } from '../../redux/actions';
 
+import { currencyContext, returnSum } from '../../context/currency-context';
+
 function Basket({
   title = 'Basket',
   total,
@@ -34,6 +36,7 @@ function Basket({
 }) {
   // console.log('render Basket');
   // const { name } = useContext(userContext);
+  const { currency } = useContext(currencyContext);
   const location = useLocation();
   const [disabled, setDisabled] = useState(false);
   useEffect(() => {
@@ -73,16 +76,16 @@ function Basket({
             <BasketItem
               product={product}
               amount={amount}
-              subtotal={subtotal}
+              subtotal={returnSum(subtotal, currency)}
               restaurantId={restaurantId}
             />
           </CSSTransition>
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={`${returnSum(total, currency)}`} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={`${returnSum(total, currency)}`} bold />
       {location.pathname === '/checkout' ? (
         <Button
           onClick={() => {

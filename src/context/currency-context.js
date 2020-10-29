@@ -18,6 +18,9 @@ export const returnSum = (value, currency) => {
     case 'RUB':
       value = Math.round(value * exchangeRate[2]);
       return value + ' ₽';
+    case 'GBP':
+      value = Math.round(value * exchangeRate[3]);
+      return value + ' £';
     default:
       return value;
   }

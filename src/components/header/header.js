@@ -7,7 +7,7 @@ import { currencyContext } from '../../context/currency-context';
 
 const Header = () => {
   const { name, setName } = useContext(userContext);
-  const { currency, setCurrency } = useContext(currencyContext);
+  const { setCurrency } = useContext(currencyContext);
 
   return (
     <header className={styles.header} onClick={() => setName('Lena')}>
@@ -39,6 +39,15 @@ const Header = () => {
           }}
         >
           ₽
+        </a>
+        <a
+          href="/"
+          onClick={(ev) => {
+            ev.preventDefault();
+            setCurrency('GBP');
+          }}
+        >
+          £
         </a>
       </h2>
       <Logo />
