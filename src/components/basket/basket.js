@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
@@ -9,7 +8,7 @@ import './basket.css';
 
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
-import Button from '../button';
+import CheckoutButton from '../checkout-button';
 import Price from '../price';
 import { orderProductsSelector, totalSelector } from '../../redux/selectors';
 import { UserConsumer } from '../../context/user-context';
@@ -52,11 +51,7 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <BasketRow label="Sub-total" content={<Price amount={total} />} />
       <BasketRow label="Delivery costs:" content="FREE" />
       <BasketRow label="total" content={<Price amount={total} />} bold />
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      <CheckoutButton />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import {
   LOAD_REVIEWS,
   LOAD_PRODUCTS,
   LOAD_USERS,
+  SEND_ORDER,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -17,6 +18,8 @@ import {
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  orderSendingSelector,
+  orderRequestDataSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
@@ -72,3 +75,32 @@ export const changeCurrency = (currencyId) => ({
   type: ADD_REVIEW,
   payload: { currencyId },
 });
+
+export const sendOrder = () => async (dispatch, getState) => {
+  const state = getState();
+  const sending = orderSendingSelector(state);
+  const order = orderRequestDataSelector(state);
+
+  if (sending) return;
+
+  dispatch({ type: SEND_ORDER + REQUEST });
+  try {
+    const result = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order),
+    });
+
+    const response = await result.json();
+
+    if (!result.ok) {
+      throw new Error(response);
+    }
+
+    dispatch({ type: SEND_ORDER + SUCCESS, response });
+    dispatch(replace('/result'));
+  } catch (error) {
+    dispatch({ type: SEND_ORDER + FAILURE, error });
+    dispatch(replace('/result'));
+  }
+};

@@ -6,7 +6,14 @@ const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
-const orderSelector = (state) => state.order;
+export const orderSelector = (state) => state.order.entities;
+export const orderErrorSelector = (state) => state.order.error;
+export const orderSendingSelector = (state) => state.order.sending;
+export const orderSendedSelector = (state) => state.order.sended;
+export const orderRequestDataSelector = createSelector(
+  orderSelector,
+  (entities) => Object.entries(entities).map(([id, amount]) => ({ id, amount }))
+);
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
