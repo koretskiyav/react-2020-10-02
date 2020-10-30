@@ -18,6 +18,7 @@ import {
 } from '../../redux/selectors';
 import { orderItems } from '../../redux/actions';
 import { UserConsumer } from '../../context/user-context';
+import { useCurrency } from '../../hooks/use-currency';
 
 const CHECKOUT_PAGE_PATH = '/checkout';
 
@@ -31,6 +32,7 @@ function Basket({
 }) {
   // console.log('render Basket');
   // const { name } = useContext(userContext);
+  const toCurrency = useCurrency();
   const location = useLocation();
   const isCheckoutPage = location.pathname === CHECKOUT_PAGE_PATH;
 
@@ -66,9 +68,9 @@ function Basket({
         ))}
       </TransitionGroup>
       <hr className={styles.hr} />
-      <BasketRow label="Sub-total" content={`${total} $`} />
+      <BasketRow label="Sub-total" content={toCurrency(total)} />
       <BasketRow label="Delivery costs:" content="FREE" />
-      <BasketRow label="total" content={`${total} $`} bold />
+      <BasketRow label="total" content={toCurrency(total)} bold />
       {isCheckoutPage ? (
         <Button
           disabled={orderLoading}
