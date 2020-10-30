@@ -1,4 +1,4 @@
-import { replace } from 'connected-react-router';
+import { replace, push } from 'connected-react-router';
 import {
   INCREMENT,
   DECREMENT,
@@ -11,12 +11,15 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  POST_CHECKOUT,
 } from './constants';
 import {
   usersLoadingSelector,
   usersLoadedSelector,
   reviewsLoadingSelector,
   reviewsLoadedSelector,
+  locationSelector,
+  postOrderSelector,
 } from './selectors';
 
 export const increment = (id) => ({ type: INCREMENT, payload: { id } });
@@ -39,6 +42,37 @@ export const loadProducts = (restaurantId) => ({
   CallAPI: `/api/products?id=${restaurantId}`,
   restaurantId,
 });
+
+export const checkout = () => async (dispatch, getState) => {
+  const state = getState();
+  const location = locationSelector(state);
+  const order = postOrderSelector(state);
+  if (location !== '/checkout') {
+    dispatch(push('/checkout'));
+  } else {
+    dispatch({ type: POST_CHECKOUT + REQUEST });
+    try {
+      const response = await fetch('/api/order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order),
+      });
+      const data = await response.json();
+      const ok = response.ok;
+      if (ok) {
+        dispatch({ type: POST_CHECKOUT + SUCCESS, response });
+        dispatch(push('/thanks'));
+      } else {
+        throw new Error(data);
+      }
+    } catch (error) {
+      dispatch({ type: POST_CHECKOUT + FAILURE, error });
+      dispatch(
+        replace({ pathname: '/error', state: { detail: error.message } })
+      );
+    }
+  }
+};
 
 export const loadReviews = (restaurantId) => async (dispatch, getState) => {
   const state = getState();
