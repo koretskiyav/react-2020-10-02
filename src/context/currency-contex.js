@@ -1,4 +1,3 @@
-import { object } from 'prop-types';
 import { createContext } from 'react';
 
 export const getNextCurrency = (currentCurrency) => {
