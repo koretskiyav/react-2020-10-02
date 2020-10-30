@@ -4,19 +4,47 @@ import { Link } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
+import cn from 'classnames';
 import styles from './basket.module.css';
 import './basket.css';
 
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  orderProductsSelector,
+  totalSelector,
+  orderErrorSelector,
+  orderWaitingSelector,
+} from '../../redux/selectors';
 import { UserConsumer } from '../../context/user-context';
 import Price from '../price/price';
+import { createOrder } from '../../redux/actions';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
-  // console.log('render Basket');
-  // const { name } = useContext(userContext);
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  match,
+  createOrder,
+  errorMessage,
+  waiting,
+}) {
+  const error = match && match.isExact && '' !== errorMessage && (
+    <p className={styles.error}>{errorMessage}</p>
+  );
+  const checkoutBtn =
+    match && match.isExact ? (
+      <Button primary block onClick={() => createOrder()}>
+        Place order
+      </Button>
+    ) : (
+      <Link to="/checkout">
+        <Button primary block>
+          checkout
+        </Button>
+      </Link>
+    );
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -26,10 +54,8 @@ function Basket({ title = 'Basket', total, orderProducts }) {
   }
 
   return (
-    <div className={styles.basket}>
+    <div className={cn(styles.basket, { [styles.disabled]: waiting })}>
       <h4 className={styles.title}>
-        {/* {`${name}'s Basket`} */}
-        {/* <UserConsumer children={({ name }) => `${name}'s Basket`} /> */}
         <UserConsumer>{({ name }) => `${name}'s Basket`}</UserConsumer>
       </h4>
       <TransitionGroup>
@@ -52,11 +78,8 @@ function Basket({ title = 'Basket', total, orderProducts }) {
       <BasketRow label="Sub-total" content={<Price price={total} />} />
       <BasketRow label="Delivery costs:" content="FREE" />
       <BasketRow label="total" content={<Price price={total} />} bold />
-      <Link to="/checkout">
-        <Button primary block>
-          checkout
-        </Button>
-      </Link>
+      {checkoutBtn}
+      {error}
     </div>
   );
 }
@@ -64,6 +87,12 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
   orderProducts: orderProductsSelector,
+  errorMessage: orderErrorSelector,
+  waiting: orderWaitingSelector,
 });
 
-export default connect(mapStateToProps)(Basket);
+const mapDispatchToProps = {
+  createOrder,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Basket);

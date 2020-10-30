@@ -25,7 +25,11 @@ export const currencies = {
     symbol: '$',
   },
 };
-export const currencyContext = createContext(currencies);
+
+export const currencyContext = createContext({
+  currencies,
+  currentCurrency: currencies.usd,
+});
 
 export const CurrencyConsumer = currencyContext.Consumer;
 export const CurrencyProvider = currencyContext.Provider;

@@ -20,6 +20,7 @@ export default () => {
             <Route path="/checkout" component={Basket} />
             <Route path="/restaurants" component={RestaurantsPage} />
             <Route path="/error" component={() => <h1>Error Page</h1>} />
+            <Route path="/success" component={() => <h1>Thank you</h1>} />
             <Redirect exact from="/" to="/restaurants" />
             <Route path="/" component={() => '404 - not found'} />
           </Switch>
