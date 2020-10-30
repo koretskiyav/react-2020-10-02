@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Route } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 import Restaurants from '../components/restaurants';
 import Loader from '../components/loader';
 import {
@@ -28,8 +28,7 @@ function RestaurantsPage({
   if (match.isExact) {
     return (
       <>
-        <Restaurants match={match} history={history} />
-        <h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
+        <Redirect exact from="/" to={`/restaurants/${restaurants[0].id}`} />
       </>
     );
   }

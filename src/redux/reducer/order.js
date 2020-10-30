@@ -1,22 +1,49 @@
-import { DECREMENT, INCREMENT, REMOVE } from '../constants';
+import produce from 'immer';
+import {
+  DECREMENT,
+  INCREMENT,
+  REMOVE,
+  CREATE_ORDER,
+  REQUEST,
+  SUCCESS,
+  FAILURE,
+} from '../constants';
 
+const initialState = {
+  error: '',
+  waiting: false,
+  entities: {},
+};
 // { [productId]: amount }
-export default (state = {}, action) => {
-  const { type, payload } = action;
+export default produce((draft = initialState, action) => {
+  const { type, payload, response } = action;
   switch (type) {
     case INCREMENT:
-      return { ...state, [payload.id]: (state[payload.id] || 0) + 1 };
+      draft.entities[payload.id] = (draft.entities[payload.id] || 0) + 1;
+      break;
     case DECREMENT:
-      return {
-        ...state,
-        [payload.id]: Math.max((state[payload.id] || 0) - 1, 0),
-      };
+      draft.entities[payload.id] = Math.max(
+        (draft.entities[payload.id] || 0) - 1,
+        0
+      );
+      break;
     case REMOVE:
-      return {
-        ...state,
-        [payload.id]: 0,
-      };
+      draft.entities[payload.id] = 0;
+      break;
+    case CREATE_ORDER + REQUEST:
+      draft.waiting = true;
+      draft.error = '';
+      break;
+    case CREATE_ORDER + SUCCESS:
+      draft.entities = {};
+      draft.waiting = false;
+      draft.error = '';
+      break;
+    case CREATE_ORDER + FAILURE:
+      draft.waiting = false;
+      draft.error = response;
+      break;
     default:
-      return state;
+      return draft;
   }
-};
+});

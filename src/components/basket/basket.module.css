@@ -1,6 +1,22 @@
 .basket {
   padding: 13px 16px 20px;
   background-color: var(--pink);
+  position: relative;
+}
+
+.disabled::after {
+  background: rgba(255, 255, 255, 0.5);
+  bottom: 0;
+  content: '';
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.error {
+  color: red;
+  text-align: center;
 }
 
 .basket a {
