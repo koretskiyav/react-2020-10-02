@@ -27,3 +27,7 @@
     padding: 20px 24px;
   }
 }
+
+button:disabled {
+  cursor: not-allowed;
+}

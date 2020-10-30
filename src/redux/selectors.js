@@ -6,7 +6,7 @@ const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
-const orderSelector = (state) => state.order;
+const orderSelector = (state) => state.order.entities;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
@@ -23,6 +23,9 @@ export const reviewsLoadedSelector = (state, props) =>
 
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
+
+export const orderLoadingSelector = (state) => state.order.loading;
+export const orderMessageSelector = (state) => state.order.message;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,
@@ -56,6 +59,13 @@ export const orderProductsSelector = createSelector(
         subtotal: order[product.id] * product.price,
         restaurantId: restaurantsIds[product.id],
       }));
+  }
+);
+
+export const orderedItemsSelector = createSelector(
+  orderProductsSelector,
+  (products) => {
+    return products.map(({ amount, product: { id } }) => ({ amount, id }));
   }
 );
 

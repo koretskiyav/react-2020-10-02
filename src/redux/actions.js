@@ -11,6 +11,8 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  ORDER_ITEMS,
+  CLEAR_BASKET,
 } from './constants';
 import {
   usersLoadingSelector,
@@ -66,4 +68,26 @@ export const loadUsers = () => async (dispatch, getState) => {
   if (loading || loaded) return;
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
+};
+
+export const orderItems = ({ orderedItems }) => async (dispatch) => {
+  dispatch({ type: ORDER_ITEMS + REQUEST });
+  try {
+    const response = await fetch('/api/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderedItems),
+    }).then((res) => res.json());
+    dispatch({ type: ORDER_ITEMS + SUCCESS, response });
+    const isOrderValid = response === 'ok';
+    const path = isOrderValid ? '/order-success' : '/order-error';
+    dispatch(replace(path));
+
+    if (isOrderValid) {
+      dispatch({ type: CLEAR_BASKET });
+    }
+  } catch (error) {
+    dispatch({ type: ORDER_ITEMS + FAILURE, error });
+    dispatch(replace('/error'));
+  }
 };

@@ -10,6 +10,7 @@ import {
 import { loadRestaurants } from '../redux/actions';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Redirect } from 'react-router-dom';
 
 function RestaurantsPage({
   restaurants,
@@ -23,14 +24,17 @@ function RestaurantsPage({
     if (!loading && !loaded) loadRestaurants();
   }, []); // eslint-disable-line
 
+  const firstRestaurantId = restaurants[0]?.id;
+
   if (loading || !loaded) return <Loader />;
 
   if (match.isExact) {
     return (
-      <>
-        <Restaurants match={match} history={history} />
-        <h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
-      </>
+      <Redirect
+        exact
+        from="/restaurants/"
+        to={`/restaurants/${firstRestaurantId}/menu`}
+      />
     );
   }
 
