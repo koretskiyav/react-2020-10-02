@@ -1,16 +1,18 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import styles from './product.module.css';
-import MinusIcon from './icons/minus.svg';
-import PlusIcon from './icons/plus.svg';
 
 import { increment, decrement } from '../../redux/actions';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
-  useEffect(() => {
-    fetchData && fetchData(product.id);
-  }, []); // eslint-disable-line
+import Button from '../button';
+import { productAmountSelector, productSelector } from '../../redux/selectors';
+import { useMoney } from '../../hooks/use-money';
+
+const Product = ({ product, amount = 0, increment, decrement }) => {
+  const m = useMoney();
+  if (!product) return null;
 
   return (
     <div className={styles.product} data-id="product">
@@ -18,7 +20,7 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
         <div>
           <h4 className={styles.title}>{product.name}</h4>
           <p className={styles.description}>{product.ingredients.join(', ')}</p>
-          <div className={styles.price}>{product.price} $</div>
+          <div className={styles.price}>{m(product.price)}</div>
         </div>
         <div>
           <div className={styles.counter}>
@@ -26,20 +28,16 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
               {amount}
             </div>
             <div className={styles.buttons}>
-              <button
-                className={styles.button}
+              <Button
                 onClick={() => decrement(product.id)}
                 data-id="product-decrement"
-              >
-                <img src={MinusIcon} alt="minus" />
-              </button>
-              <button
-                className={styles.button}
+                icon="minus"
+              />
+              <Button
                 onClick={() => increment(product.id)}
                 data-id="product-increment"
-              >
-                <img src={PlusIcon} alt="plus" />
-              </button>
+                icon="plus"
+              />
             </div>
           </div>
         </div>
@@ -53,26 +51,21 @@ Product.propTypes = {
     ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
     name: PropTypes.string,
     price: PropTypes.number,
-  }).isRequired,
-  fetchData: PropTypes.func,
+  }),
   // from HOC counter
   amount: PropTypes.number,
   decrement: PropTypes.func,
   increment: PropTypes.func,
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  amount: state.order[ownProps.product.id] || 0,
+const mapStateToProps = createStructuredSelector({
+  amount: productAmountSelector,
+  product: productSelector,
 });
 
 const mapDispatchToProps = {
   decrement,
   increment,
 };
-
-// const mapDispatchToProps = (dispatch) => ({
-//   decrement: () => dispatch(decrement()),
-//   increment: () => dispatch(increment()),
-// });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Product);

@@ -1,24 +1,27 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
-import Navigation from '../navigation';
+import Tabs from '../tabs';
 
-const Restaurants = ({ restaurants }) => {
-  const [activeRestaurantId, setActiveRestaurant] = useState(restaurants[0].id);
+import { restaurantsListSelector } from '../../redux/selectors';
 
-  const activeRestaurant = useMemo(
-    () => restaurants.find(({ id }) => id === activeRestaurantId),
-    [activeRestaurantId, restaurants]
-  );
+const Restaurants = ({ restaurants, match }) => {
+  const { restId, tabId = 'menu' } = match.params;
+
+  const restaurant = restaurants.find((restaurant) => restaurant.id === restId);
+
+  const tabs = restaurants.map(({ id, name }) => ({
+    title: name,
+    to: `/restaurants/${id}/${tabId}`,
+  }));
 
   return (
-    <div>
-      <Navigation
-        restaurants={restaurants}
-        onRestaurantClick={setActiveRestaurant}
-      />
-      <Restaurant restaurant={activeRestaurant} />
-    </div>
+    <>
+      <Tabs tabs={tabs} />
+      {restId && <Restaurant {...restaurant} />}
+    </>
   );
 };
 
@@ -30,4 +33,8 @@ Restaurants.propTypes = {
   ).isRequired,
 };
 
-export default Restaurants;
+export default connect(
+  createStructuredSelector({
+    restaurants: restaurantsListSelector,
+  })
+)(Restaurants);

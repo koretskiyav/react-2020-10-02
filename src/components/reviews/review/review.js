@@ -1,10 +1,13 @@
 import React from 'react';
+import { createStructuredSelector } from 'reselect';
 import PropTypes from 'prop-types';
 
 import Rate from '../../rate';
 import styles from './review.module.css';
+import { connect } from 'react-redux';
+import { reviewWitUserSelector } from '../../../redux/selectors';
 
-const Review = ({ user, text, rating }) => (
+const Review = ({ review: { user = 'Anonymous', text, rating } }) => (
   <div className={styles.review} data-id="review">
     <div className={styles.content}>
       <div>
@@ -23,13 +26,15 @@ const Review = ({ user, text, rating }) => (
 );
 
 Review.propTypes = {
-  user: PropTypes.string,
-  text: PropTypes.string,
-  rating: PropTypes.number.isRequired,
+  review: PropTypes.shape({
+    user: PropTypes.string,
+    text: PropTypes.string,
+    rating: PropTypes.number.isRequired,
+  }),
 };
 
-Review.defaultProps = {
-  user: 'Anonymous',
-};
-
-export default Review;
+export default connect(
+  createStructuredSelector({
+    review: reviewWitUserSelector,
+  })
+)(Review);
